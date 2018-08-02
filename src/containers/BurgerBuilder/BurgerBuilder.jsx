@@ -20,6 +20,18 @@ export class BurgerBuilder extends React.Component {
     totalPrice: 4,
   };
 
+  isPurchasable = () => {
+    const ingredients = {
+      ...this.state.ingredients,
+    };
+
+    const sum = Object.keys(ingredients)
+      .map(key => ingredients[key])
+      .reduce((sum, el) => sum + el, 0);
+
+    return sum > 0;
+  };
+
   addIngredientHandler = type => {
     this.setState((prevState) => {
       return {
@@ -61,7 +73,8 @@ export class BurgerBuilder extends React.Component {
         <BuildControls price={this.state.totalPrice}
                        ingredientAdded={this.addIngredientHandler}
                        ingredientRemoved={this.removeIngredientHandler}
-                       disabled={disabledInfo}/>
+                       disabled={disabledInfo}
+                       purchasable={this.isPurchasable()}/>
       </React.Fragment>
     )
   }
