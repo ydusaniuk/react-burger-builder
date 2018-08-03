@@ -75,6 +75,12 @@ export class BurgerBuilder extends React.Component {
       }
     });
 
+  purchaseContinueHandler = () => {
+    this.purchaseCanceledHandler();
+
+    alert('Order received');
+  };
+
   render() {
     const disabledInfo = {
       ...this.state.ingredients
@@ -87,7 +93,9 @@ export class BurgerBuilder extends React.Component {
     return (
       <React.Fragment>
         <Modal visible={this.state.purchasing} modalClosed={this.purchaseCanceledHandler}>
-          <OrderSummary ingredients={this.state.ingredients}/>
+          <OrderSummary ingredients={this.state.ingredients}
+                        cancelClicked={this.purchaseCanceledHandler}
+                        continueClicked={this.purchaseContinueHandler}/>
         </Modal>
         <Burger ingredients={this.state.ingredients}/>
         <BuildControls price={this.state.totalPrice}
