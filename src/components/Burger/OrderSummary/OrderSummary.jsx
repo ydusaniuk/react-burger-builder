@@ -14,6 +14,7 @@ export const OrderSummary = props => (
             </li>)
       }
     </ul>
+    <p><strong>Total Price: {props.totalPrice.toFixed(2)}</strong></p>
     <p>Continue to checkout?</p>
     <Button type="Danger" clicked={props.cancelClicked}>Cancel</Button>
     <Button type="Success" clicked={props.continueClicked}>Continue</Button>
