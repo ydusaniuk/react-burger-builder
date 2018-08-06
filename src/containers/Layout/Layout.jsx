@@ -1,20 +1,20 @@
 import React from 'react';
 import styles from './Layout.css';
-import { Toolbar } from '../Navigation/Toolbar/Toolbar';
-import { SideDrawer } from '../Navigation/SideDrawer/SideDrawer';
+import { Toolbar } from '../../components/Navigation/Toolbar/Toolbar';
+import { SideDrawer } from '../../components/Navigation/SideDrawer/SideDrawer';
 
 export class Layout extends React.Component {
   state = {
-    visibleSideDrawer: false,
+    showSideDrawer: false,
   };
 
   closeSideDrawerHandler = () =>
-    this.setState({visibleSideDrawer: false});
+    this.setState({showSideDrawer: false});
 
   toggleSideDrawerHandler = () =>
     this.setState((prevState) => {
       return {
-        visibleSideDrawer: !prevState.visibleSideDrawer,
+        showSideDrawer: !prevState.showSideDrawer,
       }
     });
 
@@ -22,7 +22,7 @@ export class Layout extends React.Component {
     return (
       <React.Fragment>
         <Toolbar menuClicked={this.toggleSideDrawerHandler}/>
-        <SideDrawer open={this.state.visibleSideDrawer} closed={this.closeSideDrawerHandler}/>
+        <SideDrawer open={this.state.showSideDrawer} closed={this.closeSideDrawerHandler}/>
         <main className={styles.Content}>
           {this.props.children}
         </main>
