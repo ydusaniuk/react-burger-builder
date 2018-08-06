@@ -100,7 +100,7 @@ export class BurgerBuilder extends React.Component {
         </Modal>
         <Burger ingredients={this.state.ingredients}/>
         <BuildControls price={this.state.totalPrice}
-                       disabled={disabledInfo}
+                       disabledInfo={disabledInfo}
                        orderClicked={this.purchaseHandler}
                        ingredientAdded={this.addIngredientHandler}
                        ingredientRemoved={this.removeIngredientHandler}
