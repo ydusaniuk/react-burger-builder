@@ -92,7 +92,7 @@ export class BurgerBuilder extends React.Component {
 
     return (
       <React.Fragment>
-        <Modal visible={this.state.purchasing} modalClosed={this.purchaseCanceledHandler}>
+        <Modal visible={this.state.purchasing} onClosed={this.purchaseCanceledHandler}>
           <OrderSummary ingredients={this.state.ingredients}
                         totalPrice={this.state.totalPrice}
                         cancelClicked={this.purchaseCanceledHandler}
