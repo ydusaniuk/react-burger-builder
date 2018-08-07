@@ -4,6 +4,7 @@ import { BuildControls } from '../../components/Burger/BuildControls/BuildContro
 import { Modal } from '../../components/UI/Modal/Modal';
 import { OrderSummary } from '../../components/Burger/OrderSummary/OrderSummary';
 import { axiosOrders } from '../../axios-orders';
+import { Spinner } from '../../components/UI/Spinner/Spinner';
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -22,6 +23,7 @@ export class BurgerBuilder extends React.Component {
     },
     totalPrice: 4,
     purchasing: false,
+    loading: false,
   };
 
   isPurchasable = () => {
@@ -77,7 +79,7 @@ export class BurgerBuilder extends React.Component {
     });
 
   purchaseContinueHandler = () => {
-    this.purchaseCanceledHandler();
+    this.setState({loading: true});
 
     axiosOrders
       .post('/orders.json', {
@@ -94,12 +96,8 @@ export class BurgerBuilder extends React.Component {
         },
         deliveryMethod: 'urgent',
       })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+      .then(res => this.setState({loading: false, purchasing: false}))
+      .catch(err => this.setState({loading: false, purchasing: false}))
   };
 
   render() {
@@ -114,10 +112,14 @@ export class BurgerBuilder extends React.Component {
     return (
       <React.Fragment>
         <Modal visible={this.state.purchasing} onClosed={this.purchaseCanceledHandler}>
-          <OrderSummary ingredients={this.state.ingredients}
-                        totalPrice={this.state.totalPrice}
-                        cancelClicked={this.purchaseCanceledHandler}
-                        continueClicked={this.purchaseContinueHandler}/>
+          {
+            this.state.loading
+              ? <Spinner/>
+              : <OrderSummary ingredients={this.state.ingredients}
+                              totalPrice={this.state.totalPrice}
+                              cancelClicked={this.purchaseCanceledHandler}
+                              continueClicked={this.purchaseContinueHandler}/>
+          }
         </Modal>
         <Burger ingredients={this.state.ingredients}/>
         <BuildControls price={this.state.totalPrice}
