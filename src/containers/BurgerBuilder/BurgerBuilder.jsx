@@ -97,7 +97,7 @@ class BurgerBuilder extends React.Component {
   };
 
   componentDidMount() {
-    axiosOrders.get('/ingredients')
+    axiosOrders.get('/ingredients.json')
       .then(res => {
         this.setState({
           ingredients: res.data

@@ -13,15 +13,20 @@ export const withErrorHandler = (Component, axios) => {
     };
 
     componentWillMount() {
-      axios.interceptors.request.use(res => {
+      this.reqInterceptors = axios.interceptors.request.use(res => {
         this.errorConfirmedHandler();
         return res;
       });
 
-      axios.interceptors.response.use(res => res, err => {
+      this.resInterceptors = axios.interceptors.response.use(res => res, err => {
         console.error(err);
         this.setState({error: err});
       });
+    }
+
+    componentWillUnmount() {
+      axios.interceptors.request.eject(this.reqInterceptors);
+      axios.interceptors.response.eject(this.resInterceptors);
     }
 
     render() {
