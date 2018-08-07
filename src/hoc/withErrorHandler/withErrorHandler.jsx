@@ -12,7 +12,7 @@ export const withErrorHandler = (Component, axios) => {
       this.setState({error: null})
     };
 
-    componentDidMount() {
+    componentWillMount() {
       axios.interceptors.request.use(res => {
         this.errorConfirmedHandler();
         return res;
