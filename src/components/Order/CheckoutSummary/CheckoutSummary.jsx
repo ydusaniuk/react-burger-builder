@@ -14,11 +14,11 @@ class CheckoutSummary extends React.Component {
           <Burger ingredients={this.props.ingredients}/>
         </div>
         <Button type="Danger"
-                clicked={() => {}}>
+                clicked={this.props.onCancel}>
           Cancel
         </Button>
         <Button type="Success"
-                clicked={() => {}}>
+                clicked={this.props.onContinue}>
           Continue
         </Button>
       </div>
@@ -28,6 +28,8 @@ class CheckoutSummary extends React.Component {
 
 CheckoutSummary.propTypes = {
   ingredients: PropTypes.object.isRequired,
+  onCancel: PropTypes.func,
+  onContinue: PropTypes.func,
 };
 
 export default CheckoutSummary;
