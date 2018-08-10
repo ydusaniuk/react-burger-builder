@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './CheckoutSummary.css';
 
 import { Burger } from '../../Burger/Burger';
-import { Button } from '../../UI/Button/Button';
+import Button from '../../UI/Button/Button';
 
 class CheckoutSummary extends React.Component {
   render() {
