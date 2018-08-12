@@ -19,6 +19,11 @@ class ContactData extends React.Component {
             placeholder: 'Your name',
           },
           elementValue: '',
+          validation: {
+            isValid: false,
+            touched: false,
+            required: true,
+          },
         }
       },
       {
@@ -30,6 +35,11 @@ class ContactData extends React.Component {
             placeholder: 'Street',
           },
           elementValue: '',
+          validation: {
+            isValid: false,
+            touched: false,
+            required: true,
+          },
         }
       },
       {
@@ -41,6 +51,12 @@ class ContactData extends React.Component {
             placeholder: 'ZIP Code',
           },
           elementValue: '',
+          validation: {
+            isValid: false,
+            touched: false,
+            required: true,
+            length: 5,
+          },
         }
       },
       {
@@ -52,6 +68,11 @@ class ContactData extends React.Component {
             placeholder: 'Country',
           },
           elementValue: '',
+          validation: {
+            isValid: false,
+            touched: false,
+            required: true,
+          },
         }
       },
       {
@@ -63,6 +84,11 @@ class ContactData extends React.Component {
             placeholder: 'E-Mail',
           },
           elementValue: '',
+          validation: {
+            isValid: false,
+            touched: false,
+            required: true,
+          },
         }
       },
       {
@@ -80,6 +106,12 @@ class ContactData extends React.Component {
       },
     ],
     loading: false,
+  };
+
+  isFormValid = () => {
+    return this.state.orderForm
+      .filter(({value}) => value.validation)
+      .every(({value}) => value.validation.isValid);
   };
 
   submitOrderHandler = (e) => {
@@ -104,13 +136,36 @@ class ContactData extends React.Component {
       .catch(err => this.setState({loading: false}))
   };
 
+  checkValidity = (value, rules) => {
+    let isValid = true;
+
+    if (isValid && rules.required)
+      isValid = value.trim() !== '';
+
+    if (isValid && rules.length)
+      isValid = value.trim().length === rules.length;
+
+    if (isValid && rules.minLength)
+      isValid = value.trim().length >= rules.minLength;
+
+    if (isValid && rules.maxLength)
+      isValid = value.trim().length <= rules.maxLength;
+
+    return isValid;
+  };
+
   inputChangedHandler = ({target}, inputKey) =>
     this.setState((prevState) => {
       const orderForm = _.cloneDeep(prevState.orderForm);
 
-      const input = orderForm.find(p => p.key === inputKey);
-      input.value.elementValue = target.value;
-      console.log(input);
+      const input = orderForm.find(p => p.key === inputKey).value;
+      input.elementValue = target.value;
+
+      if (input.validation) {
+        input.validation.isValid = this.checkValidity(target.value, input.validation);
+        input.validation.touched = true;
+      }
+
       return ({orderForm});
     });
 
@@ -128,10 +183,11 @@ class ContactData extends React.Component {
                                   elementType={value.elementType}
                                   config={value.elementConfig}
                                   value={value.elementValue}
+                                  validation={value.validation}
                                   onChange={(e) => this.inputChangedHandler(e, key)}/>
                   })
                 }
-                <Button type="Success">Order</Button>
+                <Button type="Success" disabled={!this.isFormValid()}>Order</Button>
               </form>
             </React.Fragment>
         }
