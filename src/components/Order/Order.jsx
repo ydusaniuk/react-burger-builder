@@ -1,11 +1,27 @@
 import React from 'react';
 import styles from './Order.css';
 
-const Order = props => (
-  <div className={styles.Order}>
-    <p>Ingredients: Salad (1)</p>
-    <p>Price: <strong>USD 5.45</strong></p>
-  </div>
-);
+const Order = props => {
+  const ingredients = [];
+
+  for (let ig in props.ingredients) {
+    ingredients.push({
+      name: ig,
+      amount: props.ingredients[ig],
+    });
+  }
+
+  return (
+    <div className={styles.Order}>
+      <p>Ingredients: {
+        ingredients.map(ig => <span className={styles.Ingredient}
+                                    key={ig.name}>
+          {ig.name} ({ig.amount})
+        </span>)
+      }</p>
+      <p>Price: <strong>USD {props.price.toFixed(2)}</strong></p>
+    </div>
+  );
+};
 
 export default Order;
