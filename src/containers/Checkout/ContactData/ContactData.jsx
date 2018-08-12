@@ -86,10 +86,16 @@ class ContactData extends React.Component {
     e.preventDefault();
     this.setState({loading: true});
 
+    const formData = {};
+    this.state.orderForm.forEach(({key, value}) =>
+      formData[key] = value.elementValue
+    );
+
     axiosOrders
       .post('/orders.json', {
         ingredients: this.props.ingredients,
         price: this.props.totalPrice,
+        orderData: formData,
       })
       .then(res => {
         this.setState({loading: false});
@@ -104,7 +110,7 @@ class ContactData extends React.Component {
 
       const input = orderForm.find(p => p.key === inputKey);
       input.value.elementValue = target.value;
-
+      console.log(input);
       return ({orderForm});
     });
 
@@ -115,7 +121,7 @@ class ContactData extends React.Component {
           this.state.loading ? <Spinner/>
             : <React.Fragment>
               <h4>Enter your Contact Data</h4>
-              <form>
+              <form onSubmit={this.submitOrderHandler}>
                 {
                   this.state.orderForm.map(({key, value}) => {
                     return <Input key={key}
@@ -125,8 +131,7 @@ class ContactData extends React.Component {
                                   onChange={(e) => this.inputChangedHandler(e, key)}/>
                   })
                 }
-                {/*<Input elementType="..." config={} value={} />*/}
-                <Button type="Success" clicked={this.submitOrderHandler}>Order</Button>
+                <Button type="Success">Order</Button>
               </form>
             </React.Fragment>
         }
