@@ -4,15 +4,81 @@ import styles from './ContactData.css';
 import { axiosOrders } from '../../../axios-orders';
 import Button from '../../../components/UI/Button/Button';
 import { Spinner } from '../../../components/UI/Spinner/Spinner';
+import Input from '../../../components/UI/Input/Input';
+import _ from 'lodash';
 
 class ContactData extends React.Component {
   state = {
-    name: '',
-    email: '',
-    address: {
-      street: '',
-      postalCode: '',
-    },
+    orderForm: [
+      {
+        key: 'name',
+        value: {
+          elementType: 'input',
+          elementConfig: {
+            type: 'text',
+            placeholder: 'Your name',
+          },
+          elementValue: '',
+        }
+      },
+      {
+        key: 'street',
+        value: {
+          elementType: 'input',
+          elementConfig: {
+            type: 'text',
+            placeholder: 'Street',
+          },
+          elementValue: '',
+        }
+      },
+      {
+        key: 'zipCode',
+        value: {
+          elementType: 'input',
+          elementConfig: {
+            type: 'text',
+            placeholder: 'ZIP Code',
+          },
+          elementValue: '',
+        }
+      },
+      {
+        key: 'country',
+        value: {
+          elementType: 'input',
+          elementConfig: {
+            type: 'text',
+            placeholder: 'Country',
+          },
+          elementValue: '',
+        }
+      },
+      {
+        key: 'email',
+        value: {
+          elementType: 'input',
+          elementConfig: {
+            type: 'email',
+            placeholder: 'E-Mail',
+          },
+          elementValue: '',
+        }
+      },
+      {
+        key: 'deliveryMethod',
+        value: {
+          elementType: 'select',
+          elementConfig: {
+            options: [
+              {value: 'fastest', displayValue: 'Fastest'},
+              {value: 'cheapest', displayValue: 'Cheapest'},
+            ]
+          },
+          elementValue: '',
+        }
+      },
+    ],
     loading: false,
   };
 
@@ -24,16 +90,6 @@ class ContactData extends React.Component {
       .post('/orders.json', {
         ingredients: this.props.ingredients,
         price: this.props.totalPrice,
-        customer: {
-          name: 'Yaroslav Dusaniuk',
-          address: {
-            street: 'test',
-            zipCode: '21000',
-            contry: 'Ukraine',
-          },
-          email: 'yaroslav.dusaniuk@gmail.com',
-        },
-        deliveryMethod: 'urgent',
       })
       .then(res => {
         this.setState({loading: false});
@@ -41,6 +97,16 @@ class ContactData extends React.Component {
       })
       .catch(err => this.setState({loading: false}))
   };
+
+  inputChangedHandler = ({target}, inputKey) =>
+    this.setState((prevState) => {
+      const orderForm = _.cloneDeep(prevState.orderForm);
+
+      const input = orderForm.find(p => p.key === inputKey);
+      input.value.elementValue = target.value;
+
+      return ({orderForm});
+    });
 
   render() {
     return (
@@ -50,10 +116,16 @@ class ContactData extends React.Component {
             : <React.Fragment>
               <h4>Enter your Contact Data</h4>
               <form>
-                <input className={styles.Input} type="text" name="name" placeholder="Your name"/>
-                <input className={styles.Input} type="email" name="email" placeholder="Email"/>
-                <input className={styles.Input} type="text" name="street" placeholder="Street"/>
-                <input className={styles.Input} type="text" name="postal code" placeholder="ZIP code"/>
+                {
+                  this.state.orderForm.map(({key, value}) => {
+                    return <Input key={key}
+                                  elementType={value.elementType}
+                                  config={value.elementConfig}
+                                  value={value.elementValue}
+                                  onChange={(e) => this.inputChangedHandler(e, key)}/>
+                  })
+                }
+                {/*<Input elementType="..." config={} value={} />*/}
                 <Button type="Success" clicked={this.submitOrderHandler}>Order</Button>
               </form>
             </React.Fragment>
