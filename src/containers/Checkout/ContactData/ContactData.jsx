@@ -1,5 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import styles from './ContactData.css';
 import { axiosOrders } from '../../../axios-orders';
 import Button from '../../../components/UI/Button/Button';
@@ -97,8 +99,8 @@ class ContactData extends React.Component {
           elementType: 'select',
           elementConfig: {
             options: [
-              {value: 'fastest', displayValue: 'Fastest'},
-              {value: 'cheapest', displayValue: 'Cheapest'},
+              { value: 'fastest', displayValue: 'Fastest' },
+              { value: 'cheapest', displayValue: 'Cheapest' },
             ]
           },
           elementValue: '',
@@ -110,30 +112,30 @@ class ContactData extends React.Component {
 
   isFormValid = () => {
     return this.state.orderForm
-      .filter(({value}) => value.validation)
-      .every(({value}) => value.validation.isValid);
+      .filter(({ value }) => value.validation)
+      .every(({ value }) => value.validation.isValid);
   };
 
   submitOrderHandler = (e) => {
     e.preventDefault();
-    this.setState({loading: true});
+    this.setState({ loading: true });
 
     const formData = {};
-    this.state.orderForm.forEach(({key, value}) =>
+    this.state.orderForm.forEach(({ key, value }) =>
       formData[key] = value.elementValue
     );
 
     axiosOrders
       .post('/orders.json', {
         ingredients: this.props.ingredients,
-        price: this.props.totalPrice,
+        price: this.props.price,
         orderData: formData,
       })
       .then(res => {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         this.props.history.push('/');
       })
-      .catch(err => this.setState({loading: false}))
+      .catch(err => this.setState({ loading: false }))
   };
 
   checkValidity = (value, rules) => {
@@ -154,7 +156,7 @@ class ContactData extends React.Component {
     return isValid;
   };
 
-  inputChangedHandler = ({target}, inputKey) =>
+  inputChangedHandler = ({ target }, inputKey) =>
     this.setState((prevState) => {
       const orderForm = _.cloneDeep(prevState.orderForm);
 
@@ -166,7 +168,7 @@ class ContactData extends React.Component {
         input.validation.touched = true;
       }
 
-      return ({orderForm});
+      return ({ orderForm });
     });
 
   render() {
@@ -178,7 +180,7 @@ class ContactData extends React.Component {
               <h4>Enter your Contact Data</h4>
               <form onSubmit={this.submitOrderHandler}>
                 {
-                  this.state.orderForm.map(({key, value}) => {
+                  this.state.orderForm.map(({ key, value }) => {
                     return <Input key={key}
                                   elementType={value.elementType}
                                   config={value.elementConfig}
@@ -196,4 +198,12 @@ class ContactData extends React.Component {
   }
 }
 
-export default withRouter(ContactData);
+const mapStateToProps = state => {
+  return {
+    ingredients: state.ingredients,
+    price: state.totalPrice
+  }
+};
+
+
+export default connect(mapStateToProps)(withRouter(ContactData));
