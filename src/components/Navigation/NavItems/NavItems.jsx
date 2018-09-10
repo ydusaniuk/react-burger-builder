@@ -4,16 +4,16 @@ import { NavItem } from './NavItem/NavItem';
 
 export const NavItems = (props) => (
   <ul className={styles.NavItems}>
-    <NavItem to="/" exact>Burger Builder</NavItem>
+    <NavItem onClick={props.onClick} to="/" exact>Burger Builder</NavItem>
     {
       props.isAuthenticated
         ? (
           <React.Fragment>
-            <NavItem to="/orders">Orders</NavItem>
-            <NavItem to="/logout">Logout</NavItem>
+            <NavItem onClick={props.onClick} to="/orders">Orders</NavItem>
+            <NavItem onClick={props.onClick} to="/logout">Logout</NavItem>
           </React.Fragment>
         )
-        : <NavItem to="/auth">Authenticate</NavItem>
+        : <NavItem onClick={props.onClick} to="/auth">Authenticate</NavItem>
 
     }
   </ul>

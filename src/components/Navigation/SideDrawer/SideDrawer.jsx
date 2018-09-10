@@ -20,7 +20,7 @@ export const SideDrawer = props => {
           <Logo/>
         </div>
         <nav>
-          <NavItems isAuthenticated={props.isAuthenticated}/>
+          <NavItems onClick={props.closed} isAuthenticated={props.isAuthenticated}/>
         </nav>
       </div>
     </React.Fragment>
