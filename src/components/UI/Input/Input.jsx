@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Input.css';
 
-const Input = props => {
+export const Input = props => {
   let inputEl = null;
   const inputClasses = [styles.InputElement];
 
