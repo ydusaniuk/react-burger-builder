@@ -11,7 +11,7 @@ export const Toolbar = props => (
       <Logo/>
     </div>
     <nav className={styles.DesktopOnly}>
-      <NavItems/>
+      <NavItems isAuthenticated={props.isAuthenticated}/>
     </nav>
   </header>
 );
