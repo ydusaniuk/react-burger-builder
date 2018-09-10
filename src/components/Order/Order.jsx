@@ -11,8 +11,6 @@ const Order = props => {
     });
   }
 
-  console.log(typeof(props.price));
-
   return (
     <div className={styles.Order}>
       <p>Ingredients: {

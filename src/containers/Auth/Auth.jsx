@@ -77,8 +77,6 @@ class Auth extends React.Component {
     const email = this.state.controls.find(e => e.key === 'email').value.elementValue;
     const password = this.state.controls.find(e => e.key === 'password').value.elementValue;
 
-    console.log(email, password);
-
     this.props.onAuth(email, password, this.state.isSigningUp);
   };
 
