@@ -1,5 +1,7 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { Input, Button, Spinner } from '../../components/UI';
 import styles from './Auth.css';
 import _ from 'lodash';
@@ -103,6 +105,10 @@ class Auth extends React.Component {
     });
 
   render() {
+    if (this.props.isAuthenticated) {
+     return (<Redirect to="/"/>);
+    }
+    
     return (
       <div className={styles.Auth}>
         <label>
@@ -150,6 +156,7 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
+    isAuthenticated: state.auth.token !== null,
   }
 };
 

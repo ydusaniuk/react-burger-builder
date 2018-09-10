@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions/actionTypes';
 
 import { Burger } from '../../components/Burger/Burger';
 import { BuildControls } from '../../components/Burger/BuildControls/BuildControls';
@@ -27,7 +26,7 @@ class BurgerBuilder extends React.Component {
   purchaseUpdatedHandler = (purchasing) =>
     this.setState({ purchasing });
 
-  purchaseContinueHandler = () =>{
+  purchaseContinueHandler = () => {
     this.props.onInitPurchase();
     this.props.history.push('/checkout');
   };
@@ -66,7 +65,8 @@ class BurgerBuilder extends React.Component {
                              orderClicked={() => this.purchaseUpdatedHandler(true)}
                              ingredientAdded={this.props.onIngredientAdded}
                              ingredientRemoved={this.props.onIngredientRemoved}
-                             purchasable={this.isPurchasable()}/>
+                             purchasable={this.isPurchasable()}
+                             isAuthenticated={this.props.isAuthenticated}/>
             </React.Fragment>
         }
         {
@@ -82,6 +82,7 @@ const mapStateToProps = state => {
     ingredients: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.totalPrice,
     error: state.burgerBuilder.error,
+    isAuthenticated: state.auth.token !== null,
   };
 };
 

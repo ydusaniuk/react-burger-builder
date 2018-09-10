@@ -4,10 +4,10 @@ import styles from './BuildControls.css';
 import { BuildControl } from './BuildControl/BuildControl';
 
 const CONTROLS = [
-  {label: 'Salad', type: 'salad'},
-  {label: 'Bacon', type: 'bacon'},
-  {label: 'Cheese', type: 'cheese'},
-  {label: 'Meat', type: 'meat'},
+  { label: 'Salad', type: 'salad' },
+  { label: 'Bacon', type: 'bacon' },
+  { label: 'Cheese', type: 'cheese' },
+  { label: 'Meat', type: 'meat' },
 ];
 
 export class BuildControls extends React.Component {
@@ -24,11 +24,18 @@ export class BuildControls extends React.Component {
                           lessClicked={() => this.props.ingredientRemoved(ctrl.type)}/>
           )
         }
-        <button disabled={!this.props.purchasable}
-                onClick={this.props.orderClicked}
-                className={styles.OrderButton}>
-          ORDER NOW
-        </button>
+        {
+          !this.props.isAuthenticated
+            ? <label>SIGN UP TO ORDER</label>
+            : (
+              <button disabled={!this.props.purchasable}
+                      onClick={this.props.orderClicked}
+                      className={styles.OrderButton}>
+                ORDER NOW
+              </button>
+            )
+        }
+
       </div>
     );
   }
