@@ -6,6 +6,7 @@ import { Input, Button, Spinner } from '../../components/UI';
 import styles from './Auth.css';
 import _ from 'lodash';
 import * as actions from '../../store/actions';
+import { checkValidity } from '../../shared/validation.utility';
 
 class Auth extends React.Component {
   state = {
@@ -55,7 +56,7 @@ class Auth extends React.Component {
       input.elementValue = target.value;
 
       if (input.validation) {
-        input.validation.isValid = this.checkValidity(target.value, input.validation);
+        input.validation.isValid = checkValidity(target.value, input.validation);
         input.validation.touched = true;
       }
 
@@ -63,23 +64,7 @@ class Auth extends React.Component {
     });
   };
 
-  checkValidity = (value, rules) => {
-    let isValid = true;
 
-    if (isValid && rules.required)
-      isValid = value.trim() !== '';
-
-    if (isValid && rules.length)
-      isValid = value.trim().length === rules.length;
-
-    if (isValid && rules.minLength)
-      isValid = value.trim().length >= rules.minLength;
-
-    if (isValid && rules.maxLength)
-      isValid = value.trim().length <= rules.maxLength;
-
-    return isValid;
-  };
 
   isFormValid = () => {
     return this.state.controls
@@ -108,7 +93,7 @@ class Auth extends React.Component {
     if (this.props.isAuthenticated) {
      return (<Redirect to="/"/>);
     }
-    
+
     return (
       <div className={styles.Auth}>
         <label>
