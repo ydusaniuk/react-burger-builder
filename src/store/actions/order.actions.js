@@ -1,24 +1,24 @@
 export const orderActionTypes = {
   PURCHASE_INIT: 'PURCHASE_INIT',
 
-  PURCHASE_BURGER_START: 'PURCHASE_BURGER_START',
+  PURCHASE_BURGER: 'PURCHASE_BURGER',
   PURCHASE_BURGER_SUCCESS: 'PURCHASE_BURGER_SUCCESS',
   PURCHASE_BURGER_FAIL: 'PURCHASE_BURGER_FAIL',
 
-  FETCH_ORDERS_START: 'FETCH_ORDERS_START',
+  FETCH_ORDERS: 'FETCH_ORDERS',
   FETCH_ORDERS_SUCCESS: 'FETCH_ORDERS_SUCCESS',
   FETCH_ORDERS_FAIL: 'FETCH_ORDERS_FAIL',
 };
 
-export const purchaseInit = () => {
+const purchaseInit = () => {
   return {
     type: orderActionTypes.PURCHASE_INIT,
   }
 };
 
-export const purchaseBurgerStart = (orderData, token) => {
+const purchaseBurger = (orderData, token) => {
   return {
-    type: orderActionTypes.PURCHASE_BURGER_START,
+    type: orderActionTypes.PURCHASE_BURGER,
     payload: {
       orderData,
       token,
@@ -26,7 +26,7 @@ export const purchaseBurgerStart = (orderData, token) => {
   }
 };
 
-export const purchaseBurgerSuccess = (id, orderData) => {
+const purchaseBurgerSuccess = (id, orderData) => {
   return {
     type: orderActionTypes.PURCHASE_BURGER_SUCCESS,
     payload: {
@@ -36,16 +36,16 @@ export const purchaseBurgerSuccess = (id, orderData) => {
   }
 };
 
-export const purchaseBurgerFail = error => {
+const purchaseBurgerFail = error => {
   return {
     type: orderActionTypes.PURCHASE_BURGER_FAIL,
     error: error,
   }
 };
 
-export const fetchOrdersStart = (token, userId) => {
+const fetchOrders = (token, userId) => {
   return {
-    type: orderActionTypes.FETCH_ORDERS_START,
+    type: orderActionTypes.FETCH_ORDERS,
     payload: {
       token,
       userId,
@@ -53,14 +53,14 @@ export const fetchOrdersStart = (token, userId) => {
   }
 };
 
-export const fetchOrdersSuccess = orders => {
+const fetchOrdersSuccess = orders => {
   return {
     type: orderActionTypes.FETCH_ORDERS_SUCCESS,
     payload: orders,
   }
 };
 
-export const fetchOrdersFail = error => {
+const fetchOrdersFail = error => {
   return {
     type: orderActionTypes.FETCH_ORDERS_FAIL,
     payload: error,
@@ -70,11 +70,11 @@ export const fetchOrdersFail = error => {
 export const orderActions = {
   purchaseInit,
 
-  purchaseBurgerStart,
+  purchaseBurger,
   purchaseBurgerSuccess,
   purchaseBurgerFail,
 
-  fetchOrdersStart,
+  fetchOrders,
   fetchOrdersSuccess,
   fetchOrdersFail,
 };

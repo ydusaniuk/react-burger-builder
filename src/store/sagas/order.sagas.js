@@ -8,8 +8,8 @@ import {
 import { axiosOrders } from '../../axios-orders';
 
 export function* orderSagas() {
-  yield takeEvery(orderActionTypes.PURCHASE_BURGER_START, purchaseBurgerSaga);
-  yield takeEvery(orderActionTypes.FETCH_ORDERS_START, fetchOrdersSaga);
+  yield takeEvery(orderActionTypes.PURCHASE_BURGER, purchaseBurgerSaga);
+  yield takeEvery(orderActionTypes.FETCH_ORDERS, fetchOrdersSaga);
 }
 
 function* purchaseBurgerSaga(action) {

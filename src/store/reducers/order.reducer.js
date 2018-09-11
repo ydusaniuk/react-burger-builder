@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import { orderActionTypes } from '../actions/order.actions';
 
 const initialState = {
   orders: [],
@@ -8,13 +8,19 @@ const initialState = {
 
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.PURCHASE_BURGER_START:
+    case orderActionTypes.PURCHASE_INIT:
+      return {
+        ...state,
+        purchased: false,
+      };
+
+    case orderActionTypes.PURCHASE_BURGER:
       return {
         ...state,
         loading: true,
       };
 
-    case actionTypes.PURCHASE_BURGER_SUCCESS:
+    case orderActionTypes.PURCHASE_BURGER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -25,33 +31,26 @@ const orderReducer = (state = initialState, action) => {
         }),
       };
 
-    case actionTypes.PURCHASE_BURGER_FAIL:
+    case orderActionTypes.PURCHASE_BURGER_FAIL:
       return {
         ...state,
         loading: false,
       };
 
-    case actionTypes.PURCHASE_INIT:
-      return {
-        ...state,
-        purchased: false,
-      };
-
-
-    case actionTypes.FETCH_ORDERS_START:
+    case orderActionTypes.FETCH_ORDERS:
       return {
         ...state,
         loading: true,
       };
 
-    case actionTypes.FETCH_ORDERS_SUCCESS:
+    case orderActionTypes.FETCH_ORDERS_SUCCESS:
       return {
         ...state,
         orders: action.payload,
         loading: false,
       };
 
-    case actionTypes.FETCH_ORDERS_FAIL: {
+    case orderActionTypes.FETCH_ORDERS_FAIL: {
       return {
         ...state,
         loading: false,
