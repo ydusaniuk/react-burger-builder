@@ -2,13 +2,13 @@ import { delay, takeEvery } from 'redux-saga';
 import { put } from 'redux-saga/effects';
 import axios from 'axios';
 
-import authActions, { AuthActionTypes } from '../actions/auth.actions';
+import authActions, { authActionTypes } from '../actions/auth.actions';
 
 export function* authSagas() {
-  yield takeEvery(AuthActionTypes.AUTHENTICATE, authenticateSaga);
-  yield takeEvery(AuthActionTypes.LOGOUT, logoutSaga);
-  yield takeEvery(AuthActionTypes.TRY_AUTO_LOGIN, tryAutoLoginSaga);
-  yield takeEvery(AuthActionTypes.CHECK_AUTH_TIMEOUT, checkAuthTimeoutSaga);
+  yield takeEvery(authActionTypes.AUTHENTICATE, authenticateSaga);
+  yield takeEvery(authActionTypes.LOGOUT, logoutSaga);
+  yield takeEvery(authActionTypes.TRY_AUTO_LOGIN, tryAutoLoginSaga);
+  yield takeEvery(authActionTypes.CHECK_AUTH_TIMEOUT, checkAuthTimeoutSaga);
 }
 
 function* authenticateSaga(action) {

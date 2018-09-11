@@ -1,40 +1,53 @@
-import * as actionTypes from './actionTypes';
-import { axiosOrders } from '../../axios-orders';
+export const burgerBuilderActionTypes = {
+  ADD_INGREDIENT: 'ADD_INGREDIENT',
+  REMOVE_INGREDIENT: 'REMOVE_INGREDIENT',
+
+  SET_INGREDIENTS: 'SET_INGREDIENTS',
+  SET_INGREDIENTS_SUCCESS: 'SET_INGREDIENTS_SUCCESS',
+  SET_INGREDIENTS_FAIL: 'SET_INGREDIENTS_FAIL',
+
+};
 
 export const addIngredient = (name) => {
   return {
-    type: actionTypes.ADD_INGREDIENT,
+    type: burgerBuilderActionTypes.ADD_INGREDIENT,
     payload: name,
   }
 };
 
 export const removeIngredient = (name) => {
   return {
-    type: actionTypes.REMOVE_INGREDIENT,
+    type: burgerBuilderActionTypes.REMOVE_INGREDIENT,
     payload: name,
   }
 };
 
-export const setIngredients = (ingredients) => {
+export const setIngredients = () => {
   return {
-    type: actionTypes.SET_INGREDIENTS,
+    type: burgerBuilderActionTypes.SET_INGREDIENTS,
+  };
+};
+
+const setIngredientsSuccess = (ingredients) => {
+  return {
+    type: burgerBuilderActionTypes.SET_INGREDIENTS_SUCCESS,
     payload: ingredients,
-  };
-};
-
-export const setIngredientsFail = () => {
-  return {
-    type: actionTypes.SET_INGREDIENTS_FAIL,
-  };
-};
-
-export const initIngredients = () => {
-  return dispatch => {
-    axiosOrders.get('/ingredients.json')
-      .then(res => {
-        dispatch(setIngredients(res.data));
-      }).catch(() => {
-        dispatch(setIngredientsFail())
-    });
   }
 };
+
+export const setIngredientsFail = (error) => {
+  return {
+    type: burgerBuilderActionTypes.SET_INGREDIENTS_FAIL,
+    payload: error,
+  };
+};
+
+export const burgerBuilderActions = {
+  addIngredient,
+  removeIngredient,
+  setIngredients,
+  setIngredientsSuccess,
+  setIngredientsFail,
+};
+
+export default burgerBuilderActions;

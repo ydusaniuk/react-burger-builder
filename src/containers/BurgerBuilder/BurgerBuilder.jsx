@@ -1,14 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Burger } from '../../components/Burger/Burger';
-import { BuildControls } from '../../components/Burger/BuildControls/BuildControls';
 import { Modal } from '../../components/UI/Modal/Modal';
-import { OrderSummary } from '../../components/Burger/OrderSummary/OrderSummary';
-import { axiosOrders } from '../../axios-orders';
+import { Burger } from '../../components/Burger/Burger';
 import { Spinner } from '../../components/UI/Spinner/Spinner';
+import { OrderSummary } from '../../components/Burger/OrderSummary/OrderSummary';
+import { BuildControls } from '../../components/Burger/BuildControls/BuildControls';
+
+import { axiosOrders } from '../../axios-orders';
 import { withErrorHandler } from '../../hoc/withErrorHandler/withErrorHandler';
+
 import * as actions from '../../store/actions';
+import burgerBuilderActions from '../../store/actions/burgerBuilder.actions';
 
 export class BurgerBuilder extends React.Component {
   state = {
@@ -88,9 +91,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onIngredientAdded: ingredient => dispatch(actions.addIngredient(ingredient)),
-    onIngredientRemoved: ingredient => dispatch(actions.removeIngredient(ingredient)),
-    onInitIngredients: () => dispatch(actions.initIngredients()),
+    onIngredientAdded: ingredient => dispatch(burgerBuilderActions.addIngredient(ingredient)),
+    onIngredientRemoved: ingredient => dispatch(burgerBuilderActions.removeIngredient(ingredient)),
+    onInitIngredients: () => dispatch(burgerBuilderActions.setIngredients()),
     onInitPurchase: () => dispatch(actions.purchaseInit()),
   }
 };

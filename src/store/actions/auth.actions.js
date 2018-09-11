@@ -1,4 +1,4 @@
-export const AuthActionTypes = {
+export const authActionTypes = {
   AUTHENTICATE: 'AUTHENTICATE',
   AUTHENTICATE_SUCCESS: 'AUTHENTICATE_SUCCESS',
   AUTHENTICATE_FAIL: 'AUTHENTICATE_FAIL',
@@ -12,7 +12,7 @@ export const AuthActionTypes = {
 
 const authenticate = (email, password, isSigningUp = false) => {
   return {
-    type: AuthActionTypes.AUTHENTICATE,
+    type: authActionTypes.AUTHENTICATE,
     payload: {
       email: email,
       password: password,
@@ -23,7 +23,7 @@ const authenticate = (email, password, isSigningUp = false) => {
 
 const authenticateSuccess = (token, userId) => {
   return {
-    type: AuthActionTypes.AUTHENTICATE_SUCCESS,
+    type: authActionTypes.AUTHENTICATE_SUCCESS,
     payload: {
       token: token,
       userId: userId,
@@ -33,33 +33,33 @@ const authenticateSuccess = (token, userId) => {
 
 const authenticateFail = (error) => {
   return {
-    type: AuthActionTypes.AUTHENTICATE_FAIL,
+    type: authActionTypes.AUTHENTICATE_FAIL,
     payload: error,
   }
 };
 
 const logout = () => {
   return {
-    type: AuthActionTypes.LOGOUT,
+    type: authActionTypes.LOGOUT,
   };
 };
 
 const logoutSuccess = () => {
   return {
-    type: AuthActionTypes.LOGOUT_SUCCESS,
+    type: authActionTypes.LOGOUT_SUCCESS,
   }
 };
 
 const checkAuthTimeout = (expirationTime) => {
   return {
-    type: AuthActionTypes.CHECK_AUTH_TIMEOUT,
+    type: authActionTypes.CHECK_AUTH_TIMEOUT,
     payload: expirationTime,
   }
 };
 
 const tryAutoLogin = () => {
   return {
-    type: AuthActionTypes.TRY_AUTO_LOGIN
+    type: authActionTypes.TRY_AUTO_LOGIN
   }
 };
 
