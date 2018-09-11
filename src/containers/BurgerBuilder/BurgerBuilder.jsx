@@ -10,8 +10,8 @@ import { BuildControls } from '../../components/Burger/BuildControls/BuildContro
 import { axiosOrders } from '../../axios-orders';
 import { withErrorHandler } from '../../hoc/withErrorHandler/withErrorHandler';
 
-import * as actions from '../../store/actions';
 import burgerBuilderActions from '../../store/actions/burgerBuilder.actions';
+import orderActions from '../../store/actions/order.actions';
 
 export class BurgerBuilder extends React.Component {
   state = {
@@ -94,7 +94,7 @@ const mapDispatchToProps = dispatch => {
     onIngredientAdded: ingredient => dispatch(burgerBuilderActions.addIngredient(ingredient)),
     onIngredientRemoved: ingredient => dispatch(burgerBuilderActions.removeIngredient(ingredient)),
     onInitIngredients: () => dispatch(burgerBuilderActions.setIngredients()),
-    onInitPurchase: () => dispatch(actions.purchaseInit()),
+    onInitPurchase: () => dispatch(orderActions.purchaseInit()),
   }
 };
 

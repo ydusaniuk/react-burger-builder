@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import Order from '../../components/Order/Order';
+import { Spinner } from '../../components/UI/Spinner/Spinner';
+
+import orderActions from '../../store/actions/order.actions';
+
 import { axiosOrders } from '../../axios-orders';
 import { withErrorHandler } from '../../hoc/withErrorHandler/withErrorHandler';
-import * as actions from '../../store/actions';
-import { Spinner } from '../../components/UI/Spinner/Spinner';
 
 class Orders extends React.Component {
   componentDidMount() {
@@ -40,7 +43,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchOrders: (token, userId) => dispatch(actions.fetchOrders(token, userId)),
+    onFetchOrders: (token, userId) => dispatch(orderActions.fetchOrdersStart(token, userId)),
   }
 };
 

@@ -60,7 +60,7 @@ function* tryAutoLoginSaga() {
     return;
   }
 
-  yield put(authActions.authSuccess(token, localId));
+  yield put(authActions.authenticateSuccess(token, localId));
   yield put(authActions.checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
 }
 

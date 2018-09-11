@@ -1,15 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
-import styles from './ContactData.css';
-import { axiosOrders } from '../../../axios-orders';
+import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import { Spinner } from '../../../components/UI/Spinner/Spinner';
-import Input from '../../../components/UI/Input/Input';
-import _ from 'lodash';
-import { withErrorHandler } from '../../../hoc/withErrorHandler/withErrorHandler';
-import * as actions from '../../../store/actions';
+
+import orderActions from '../../../store/actions/order.actions';
+
+import { axiosOrders } from '../../../axios-orders';
 import { checkValidity } from '../../../shared/validation.utility';
+
+import { withErrorHandler } from '../../../hoc/withErrorHandler/withErrorHandler';
+
+import styles from './ContactData.css';
 
 class ContactData extends React.Component {
   state = {
@@ -190,7 +194,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onOrderBurger: (data, token) => dispatch(actions.purchaseBurger(data, token)),
+    onOrderBurger: (data, token) => dispatch(orderActions.purchaseBurgerStart(data, token)),
   }
 };
 
