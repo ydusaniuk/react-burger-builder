@@ -1,4 +1,4 @@
-import { takeEvery } from 'redux-saga/effects';
+import { takeEvery, all } from 'redux-saga/effects';
 import { put } from 'redux-saga/effects';
 
 import {
@@ -8,8 +8,10 @@ import {
 import { axiosOrders } from '../../axios-orders';
 
 export function* orderSagas() {
-  yield takeEvery(orderActionTypes.PURCHASE_BURGER, purchaseBurgerSaga);
-  yield takeEvery(orderActionTypes.FETCH_ORDERS, fetchOrdersSaga);
+  yield all([
+    takeEvery(orderActionTypes.PURCHASE_BURGER, purchaseBurgerSaga),
+    takeEvery(orderActionTypes.FETCH_ORDERS, fetchOrdersSaga),
+  ]);
 }
 
 function* purchaseBurgerSaga(action) {
