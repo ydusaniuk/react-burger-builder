@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
 import authReducer from './store/reducers/auth.reducer';
@@ -25,7 +24,7 @@ const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   rootReducer,
   composeEnhancers(
-    applyMiddleware(thunk, sagaMiddleware),
+    applyMiddleware(sagaMiddleware),
   )
 );
 
