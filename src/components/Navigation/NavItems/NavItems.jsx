@@ -4,7 +4,7 @@ import NavItem from './NavItem/NavItem';
 
 const NavItems = (props) => {
   const links = [
-    { to: '/', label: 'Burger Builder' }
+    { to: '/', label: 'Burger Builder', exact: true, }
   ];
 
   if (props.isAuthenticated) {
@@ -18,7 +18,7 @@ const NavItems = (props) => {
     <ul className={styles.NavItems}>
       {
         links.map((link) =>
-          <NavItem key={link.to} onClick={props.onClick} to={link.to}>
+          <NavItem key={link.to} onClick={props.onClick} to={link.to} exact={link.exact}>
             {link.label}
           </NavItem>
         )
