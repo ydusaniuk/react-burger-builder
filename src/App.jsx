@@ -1,17 +1,18 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-import * as actions from './store/actions';
 import Layout from './containers/Layout/Layout';
-import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Logout from './containers/Auth/Logout/Logout';
+import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
+
+import authActions from './store/actions/auth.actions';
 
 import asyncComponent from './hoc/asyncComponent/asyncComponent';
 
-const asyncCheckout = asyncComponent(() => import('./containers/Checkout/Checkout'));
-const asyncOrders = asyncComponent(() => import('./containers/Orders/Orders'));
 const asyncAuth = asyncComponent(() => import('./containers/Auth/Auth'));
+const asyncOrders = asyncComponent(() => import('./containers/Orders/Orders'));
+const asyncCheckout = asyncComponent(() => import('./containers/Checkout/Checkout'));
 
 class App extends React.Component {
   componentDidMount() {
@@ -55,7 +56,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onTryAutoSignUp: () => dispatch(actions.checkAuthState()),
+    onTryAutoSignUp: () => dispatch(authActions.tryAutoLogin()),
   };
 };
 

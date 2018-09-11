@@ -1,11 +1,11 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import { Input, Button, Spinner } from '../../components/UI';
 import styles from './Auth.css';
-import _ from 'lodash';
-import * as actions from '../../store/actions';
+import authActions from '../../store/actions/auth.actions';
 import { checkValidity } from '../../shared/validation.utility';
 
 class Auth extends React.Component {
@@ -65,7 +65,6 @@ class Auth extends React.Component {
   };
 
 
-
   isFormValid = () => {
     return this.state.controls
       .every(({ value }) => value.validation && value.validation.isValid);
@@ -89,7 +88,7 @@ class Auth extends React.Component {
 
   render() {
     if (this.props.isAuthenticated) {
-     return (<Redirect to="/"/>);
+      return (<Redirect to="/"/>);
     }
 
     return (
@@ -145,7 +144,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: (email, password, isSigningUp) => dispatch(actions.auth(email, password, isSigningUp)),
+    onAuth: (email, password, isSigningUp) => dispatch(authActions.authenticate(email, password, isSigningUp)),
   }
 };
 

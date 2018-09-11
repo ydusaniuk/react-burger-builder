@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import { AuthActionTypes } from '../actions/auth.actions';
 
 export const initialState = {
   token: null,
@@ -9,14 +9,14 @@ export const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.AUTH_START:
+    case AuthActionTypes.AUTHENTICATE:
       return {
         ...state,
         error: null,
         loading: true,
       };
 
-    case actionTypes.AUTH_SUCCESS:
+    case AuthActionTypes.AUTHENTICATE_SUCCESS:
       return {
         ...state,
         token: action.payload.token,
@@ -24,14 +24,14 @@ const authReducer = (state = initialState, action) => {
         loading: false,
       };
 
-    case actionTypes.AUTH_FAIL:
+    case AuthActionTypes.AUTHENTICATE_FAIL:
       return {
         ...state,
         error: action.payload,
         loading: false,
       };
 
-    case actionTypes.AUTH_LOGOUT:
+    case AuthActionTypes.LOGOUT_SUCCESS:
       return {
         ...state,
         token: null,

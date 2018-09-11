@@ -1,34 +1,29 @@
-import * as actionTypes from './actionTypes';
-import axios from 'axios';
+export const AuthActionTypes = {
+  AUTHENTICATE: 'AUTHENTICATE',
+  AUTHENTICATE_SUCCESS: 'AUTHENTICATE_SUCCESS',
+  AUTHENTICATE_FAIL: 'AUTHENTICATE_FAIL',
 
-export const checkAuthTimeout = (expirationTime) => {
-  return dispatch => {
-    setTimeout(() => {
-      dispatch(logout());
-    }, expirationTime * 1000);
-  }
+  LOGOUT: 'LOGOUT',
+  LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
+
+  TRY_AUTO_LOGIN: 'TRY_AUTO_LOGIN',
+  CHECK_AUTH_TIMEOUT: 'CHECK_AUTH_TIMEOUT',
 };
 
-
-export const logout = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('expirationDate');
-  localStorage.removeItem('localId');
-
+const authenticate = (email, password, isSigningUp = false) => {
   return {
-    type: actionTypes.AUTH_LOGOUT,
+    type: AuthActionTypes.AUTHENTICATE,
+    payload: {
+      email: email,
+      password: password,
+      isSigningUp: isSigningUp,
+    }
   };
 };
 
-export const authStart = () => {
+const authenticateSuccess = (token, userId) => {
   return {
-    type: actionTypes.AUTH_START,
-  };
-};
-
-export const authSuccess = (token, userId) => {
-  return {
-    type: actionTypes.AUTH_SUCCESS,
+    type: AuthActionTypes.AUTHENTICATE_SUCCESS,
     payload: {
       token: token,
       userId: userId,
@@ -36,60 +31,46 @@ export const authSuccess = (token, userId) => {
   }
 };
 
-export const authFail = (err) => {
+const authenticateFail = (error) => {
   return {
-    type: actionTypes.AUTH_FAIL,
-    payload: err,
+    type: AuthActionTypes.AUTHENTICATE_FAIL,
+    payload: error,
   }
 };
 
-export const auth = (email, password, isSigningUp = false) => {
-  return dispatch => {
-    dispatch(authStart());
+const logout = () => {
+  return {
+    type: AuthActionTypes.LOGOUT,
+  };
+};
 
-    const url = isSigningUp
-      ? 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDdoYHA81uEQhxNcFQZAWe-LN0M3Ry7XnY'
-      : 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyDdoYHA81uEQhxNcFQZAWe-LN0M3Ry7XnY';
-
-    axios.post(url, {
-      email: email,
-      password: password,
-      returnSecureToken: true,
-    })
-      .then((res) => {
-        const expireDate = new Date(new Date().getTime() + res.data.expiresIn * 1000);
-
-        localStorage.setItem('expirationDate', expireDate.toISOString());
-        localStorage.setItem('token', res.data.idToken);
-        localStorage.setItem('localId', res.data.localId);
-
-        dispatch(authSuccess(res.data.idToken, res.data.localId));
-        dispatch(checkAuthTimeout(res.data.expiresIn));
-      })
-      .catch((err) => {
-        dispatch(authFail(err.response.data.error));
-      })
-
+const logoutSuccess = () => {
+  return {
+    type: AuthActionTypes.LOGOUT_SUCCESS,
   }
 };
 
-export const checkAuthState = () => {
-  return dispatch => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        dispatch(logout());
-        return;
-      }
-
-      const localId = localStorage.getItem('localId');
-      const expirationDate = new Date(localStorage.getItem('expirationDate'));
-
-      if (expirationDate <= new Date()) {
-        dispatch(logout());
-        return;
-      }
-
-      dispatch(authSuccess(token, localId));
-      dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
+const checkAuthTimeout = (expirationTime) => {
+  return {
+    type: AuthActionTypes.CHECK_AUTH_TIMEOUT,
+    payload: expirationTime,
   }
 };
+
+const tryAutoLogin = () => {
+  return {
+    type: AuthActionTypes.TRY_AUTO_LOGIN
+  }
+};
+
+const authActions = {
+  authenticate,
+  authenticateSuccess,
+  authenticateFail,
+  logout,
+  logoutSuccess,
+  checkAuthTimeout,
+  tryAutoLogin,
+};
+
+export default authActions;

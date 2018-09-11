@@ -1,5 +1,5 @@
 import authReducer, { initialState } from './auth.reducer';
-import * as actionTypes from '../actions/actionTypes';
+import { AuthActionTypes } from '../actions/auth.actions';
 
 describe('authReducer', () => {
   let state;
@@ -8,8 +8,8 @@ describe('authReducer', () => {
     state = {...initialState};
   });
 
-  it('should handle AUTH_START', () => {
-    const action = {type: actionTypes.AUTH_START};
+  it('should handle AUTHENTICATE', () => {
+    const action = {type: AuthActionTypes.AUTHENTICATE};
 
     expect(authReducer(state, action)).toEqual({
       ...initialState,
