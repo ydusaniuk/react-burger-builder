@@ -1,82 +1,48 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
-import { Input, Button, Spinner } from '../../components/UI';
+import { Button, Spinner } from '../../components/UI';
 import styles from './Auth.css';
 import authActions from '../../store/actions/auth.actions';
-import { checkValidity } from '../../shared/validation.utility';
+import Form from '../../components/UI/Form/Form';
 
 class Auth extends React.Component {
+  controls = {
+    email: {
+      type: 'input',
+      elementType: 'email',
+      placeholder: 'your@email.com',
+      value: '',
+
+      validation: {
+        isValid: false,
+        touched: false,
+        required: true,
+      },
+    },
+    password: {
+      type: 'input',
+      elementType: 'password',
+      placeholder: 'password',
+      value: '',
+
+      validation: {
+        isValid: false,
+        touched: false,
+        required: true,
+        minLength: 6,
+      },
+    },
+  };
+
   state = {
     isSigningUp: false,
-    controls: [
-      {
-        key: 'email',
-        value: {
-          elementType: 'input',
-          elementConfig: {
-            type: 'email',
-            placeholder: 'E-Mail',
-          },
-          elementValue: '',
-          validation: {
-            isValid: false,
-            touched: false,
-            required: true,
-          },
-        }
-      },
-      {
-        key: 'password',
-        value: {
-          elementType: 'input',
-          elementConfig: {
-            type: 'password',
-            placeholder: 'Password',
-          },
-          elementValue: '',
-          validation: {
-            isValid: false,
-            touched: false,
-            required: true,
-            minLength: 6,
-          },
-        }
-      },
-    ]
   };
 
-  inputChangedHandler = ({ target }, inputKey) => {
-    this.setState((prevState) => {
-      const controls = _.cloneDeep(prevState.controls);
-
-      const input = controls.find(p => p.key === inputKey).value;
-      input.elementValue = target.value;
-
-      if (input.validation) {
-        input.validation.isValid = checkValidity(target.value, input.validation);
-        input.validation.touched = true;
-      }
-
-      return ({ controls });
-    });
-  };
-
-
-  isFormValid = () => {
-    return this.state.controls
-      .every(({ value }) => value.validation && value.validation.isValid);
-  };
-
-  onSubmitHandler = (e) => {
+  onSubmitHandler = (e, data) => {
     e.preventDefault();
-
-    const email = this.state.controls.find(e => e.key === 'email').value.elementValue;
-    const password = this.state.controls.find(e => e.key === 'password').value.elementValue;
-
-    this.props.onAuth(email, password, this.state.isSigningUp);
+    this.props.onAuth(data.email, data.password, this.state.isSigningUp);
   };
 
   switchAuthModeHandler = () =>
@@ -94,37 +60,16 @@ class Auth extends React.Component {
     return (
       <div className={styles.Auth}>
         <label>
-          {
-            this.state.isSigningUp
-              ? 'Sign Up'
-              : 'Sign In'
-          }
+          {this.state.isSigningUp ? 'Sign Up' : 'Sign In'}
         </label>
         {
           this.props.loading
-            ? <Spinner/>
-            : (
+            ? <Spinner/> : (
               <React.Fragment>
-                <form onSubmit={this.onSubmitHandler}>
-                  {
-                    this.state.controls.map(({ key, value }) => {
-                      return <Input key={key}
-                                    elementType={value.elementType}
-                                    config={value.elementConfig}
-                                    value={value.elementValue}
-                                    validation={value.validation}
-                                    onChange={(e) => this.inputChangedHandler(e, key)}/>
-                    })
-                  }
-                  {this.props.error && <p>{this.props.error.message}</p>}
-                  <Button type="Success" disabled={!this.isFormValid()}>SUBMIT</Button>
-                </form>
+                <Form controls={this.controls} onSubmit={this.onSubmitHandler}/>
+                {this.props.error && <p>{this.props.error.message}</p>}
                 <Button type='Danger' clicked={this.switchAuthModeHandler}>
-                  {
-                    this.state.isSigningUp
-                      ? 'Already have an account?'
-                      : 'Create new account'
-                  }
+                  {this.state.isSigningUp ? 'Already have an account?' : 'Create new account'}
                 </Button>
               </React.Fragment>
             )
