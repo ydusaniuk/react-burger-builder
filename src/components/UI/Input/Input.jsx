@@ -10,13 +10,15 @@ class Input extends React.Component {
   createInputElement = (inputClasses) => {
     switch (this.props.type) {
       case 'textarea':
-        return <textarea className={inputClasses}
+        return <textarea id={this.props.id}
+                         className={inputClasses}
                          value={this.props.value}
                          onChange={this.props.onChange}
                          placeholder={this.props.placeholder}/>;
 
       case 'select':
-        return <select className={inputClasses}
+        return <select id={this.props.id}
+                       className={inputClasses}
                        value={this.props.value}
                        onChange={this.props.onChange}>
           {
@@ -28,7 +30,8 @@ class Input extends React.Component {
 
       case 'input':
       default: {
-        return <input className={inputClasses}
+        return <input id={this.props.id}
+                      className={inputClasses}
                       value={this.props.value}
                       onChange={this.props.onChange}
                       type={this.props.elementType}
@@ -48,8 +51,9 @@ class Input extends React.Component {
 
     return (
       <div className={styles.Input}>
-        <label className={styles.Label}>{this.props.label}</label>
+        {this.props.label && <label className={styles.Label} htmlFor={this.props.id}>{this.props.label}</label>}
         {inputEl}
+        {this.props.hint && <p className={styles.Hint}>{this.props.hint}</p>}
       </div>
     )
   }

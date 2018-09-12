@@ -18,7 +18,7 @@
     .NavItems {
         flex-flow: row;
     }
-    
+
     .TextSeparator {
         display: block;
         color: #c6c6c6;

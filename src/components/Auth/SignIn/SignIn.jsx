@@ -12,9 +12,10 @@ import styles from './SignIn.css';
 class SignIn extends React.Component {
   controls = {
     email: {
+      id: '#signin_email',
       type: 'input',
+      label: 'Email',
       elementType: 'email',
-      placeholder: 'your@email.com',
       value: '',
 
       validation: {
@@ -24,9 +25,10 @@ class SignIn extends React.Component {
       },
     },
     password: {
+      id: '#signin_password',
       type: 'input',
+      label: 'Password',
       elementType: 'password',
-      placeholder: 'password',
       value: '',
 
       validation: {

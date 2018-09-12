@@ -13,7 +13,8 @@ class SignUp extends React.Component {
     email: {
       type: 'input',
       elementType: 'email',
-      placeholder: 'your@email.com',
+      label: 'Email address',
+      hint: 'Lorem ipsum dolor sit amet, consectetur. We\'ll never share your email address with anyone.',
       value: '',
 
       validation: {
@@ -25,7 +26,8 @@ class SignUp extends React.Component {
     password: {
       type: 'input',
       elementType: 'password',
-      placeholder: 'password',
+      label: 'Password',
+      hint: 'Use at least 6 characters',
       value: '',
 
       validation: {
@@ -38,7 +40,8 @@ class SignUp extends React.Component {
     repeatPassword: {
       type: 'input',
       elementType: 'password',
-      placeholder: 'repeat password',
+      label: 'Repeat password',
+      hint: 'Please ensure that your passwords match',
       value: '',
 
       validation: {
