@@ -11,6 +11,7 @@ import styles from './SignUp.css';
 class SignUp extends React.Component {
   controls = {
     email: {
+      id: '#signup_email',
       type: 'input',
       elementType: 'email',
       label: 'Email address',
@@ -24,6 +25,7 @@ class SignUp extends React.Component {
       },
     },
     password: {
+      id: '#signup_password',
       type: 'input',
       elementType: 'password',
       label: 'Password',
@@ -38,6 +40,7 @@ class SignUp extends React.Component {
       },
     },
     repeatPassword: {
+      id: '#signup_repeat_password',
       type: 'input',
       elementType: 'password',
       label: 'Repeat password',
