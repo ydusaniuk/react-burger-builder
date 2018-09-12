@@ -37,11 +37,12 @@
         border-bottom: 4px solid transparent;
     }
 
-    .NavItem a:hover,
     .NavItem a:active,
     .NavItem a.active {
-        background-color: #8f5c2c;
-        border-bottom: 4px solid #40a4c8;
         color: #fff;
+    }
+
+    .NavItem a:hover {
+        color: #c6c6c6;
     }
 }

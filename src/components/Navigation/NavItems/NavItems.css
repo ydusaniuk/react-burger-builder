@@ -10,8 +10,17 @@
     height: 100%;
 }
 
+.TextSeparator {
+    display: none;
+}
+
 @media (min-width: 500px) {
     .NavItems {
         flex-flow: row;
+    }
+    
+    .TextSeparator {
+        display: block;
+        color: #c6c6c6;
     }
 }
