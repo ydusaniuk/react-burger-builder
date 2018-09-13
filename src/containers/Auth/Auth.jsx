@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import SignIn from '../../components/Auth/SignIn/SignIn';
 import SignUp from '../../components/Auth/SignUp/SignUp';
+import ForgotPassword from '../../components/Auth/ForgotPassword/ForgotPassword';
 
 class Auth extends React.Component {
   render() {
@@ -13,8 +14,9 @@ class Auth extends React.Component {
 
     return (
       <Switch>
-        <Route path={this.props.match.path + '/signIn'} component={SignIn}/>
         <Route path={this.props.match.path + '/signUp'} component={SignUp}/>
+        <Route path={this.props.match.path + '/signIn'} component={SignIn}/>
+        <Route path={this.props.match.path + '/restoreAccess'} component={ForgotPassword}/>
       </Switch>
     );
   }

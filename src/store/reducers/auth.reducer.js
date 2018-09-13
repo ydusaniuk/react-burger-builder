@@ -1,10 +1,13 @@
 import { authActionTypes } from '../actions/auth.actions';
+import requestStatus from '../../shared/requestStatus';
 
 export const initialState = {
   token: null,
   userId: null,
   error: null,
   loading: false,
+  requestOobCode: null,
+  requestOobCodeLoadStatus: requestStatus(),
 };
 
 const authReducer = (state = initialState, action) => {
@@ -36,6 +39,34 @@ const authReducer = (state = initialState, action) => {
         ...state,
         token: null,
         userId: null,
+      };
+
+    case authActionTypes.FORGOT_PASSWORD:
+      return {
+        ...state,
+        requestOobCode: null,
+        requestOobCodeLoadStatus: requestStatus(),
+      };
+
+    case authActionTypes.REQUEST_OOB_CODE:
+      return {
+        ...state,
+        requestOobCode: { email: action.payload },
+        requestOobCodeLoadStatus: requestStatus(true),
+      };
+
+    case authActionTypes.REQUEST_OOB_CODE_SUCCESS:
+      return {
+        ...state,
+        requestObbCode: null,
+        requestOobCodeLoadStatus: requestStatus(false, true),
+      };
+
+    case authActionTypes.REQUEST_OOB_CODE_FAIL:
+      return {
+        ...state,
+        requestObbCode: null,
+        requestOobCodeLoadStatus: requestStatus(false, false, action.payload),
       };
 
     default:

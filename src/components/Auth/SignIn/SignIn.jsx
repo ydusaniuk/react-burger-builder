@@ -33,6 +33,12 @@ class SignIn extends React.Component {
       elementType: 'password',
       value: '',
 
+      outerLink: {
+        to: '/auth/restoreAccess',
+        label: 'Forgot password?',
+        onClick: this.props.onForgotPassword,
+      },
+
       validation: {
         isValid: false,
         touched: false,
@@ -81,6 +87,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (email, password, isSigningUp) => dispatch(authActions.authenticate(email, password, isSigningUp)),
+    onForgotPassword: () => dispatch(authActions.forgotPassword()),
   }
 };
 

@@ -8,6 +8,11 @@ export const authActionTypes = {
 
   TRY_AUTO_LOGIN: 'TRY_AUTO_LOGIN',
   CHECK_AUTH_TIMEOUT: 'CHECK_AUTH_TIMEOUT',
+
+  FORGOT_PASSWORD: 'FORGOT_PASSWORD',
+  REQUEST_OOB_CODE: 'REQUEST_OOB_CODE',
+  REQUEST_OOB_CODE_SUCCESS: 'REQUEST_OOB_CODE_SUCCESS',
+  REQUEST_OOB_CODE_FAIL: 'REQUEST_OOB_CODE_FAIL',
 };
 
 const authenticate = (email, password, isSigningUp = false) => {
@@ -63,6 +68,33 @@ const tryAutoLogin = () => {
   }
 };
 
+// REQUEST_OOB_CODE
+const forgotPassword = () => {
+  return {
+    type: authActionTypes.FORGOT_PASSWORD,
+  }
+};
+
+const requestObbCode = (email) => {
+  return {
+    type: authActionTypes.REQUEST_OOB_CODE,
+    payload: email,
+  }
+};
+
+const requestObbCodeSuccess = () => {
+  return {
+    type: authActionTypes.REQUEST_OOB_CODE_SUCCESS,
+  }
+};
+
+const requestObbCodeFail = (error) => {
+  return {
+    type: authActionTypes.REQUEST_OOB_CODE_FAIL,
+    payload: error,
+  }
+};
+
 const authActions = {
   authenticate,
   authenticateSuccess,
@@ -71,6 +103,11 @@ const authActions = {
   logoutSuccess,
   checkAuthTimeout,
   tryAutoLogin,
+
+  forgotPassword,
+  requestObbCode,
+  requestObbCodeSuccess,
+  requestObbCodeFail,
 };
 
 export default authActions;

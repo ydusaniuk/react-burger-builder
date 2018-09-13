@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styles from './Input.css';
+import Label from './Label/Label';
 
 class Input extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -51,7 +52,7 @@ class Input extends React.Component {
 
     return (
       <div className={styles.Input}>
-        {this.props.label && <label className={styles.Label} htmlFor={this.props.id}>{this.props.label}</label>}
+        <Label id={this.props.id} outerLink={this.props.outerLink}>{this.props.label}</Label>
         {inputEl}
         {this.props.hint && <p className={styles.Hint}>{this.props.hint}</p>}
       </div>

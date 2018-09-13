@@ -11,6 +11,7 @@ export function* authSagas() {
     takeEvery(authActionTypes.LOGOUT, logoutSaga),
     takeEvery(authActionTypes.TRY_AUTO_LOGIN, tryAutoLoginSaga),
     takeEvery(authActionTypes.CHECK_AUTH_TIMEOUT, checkAuthTimeoutSaga),
+    takeEvery(authActionTypes.REQUEST_OOB_CODE, requestObbCodeSaga),
   ]);
 }
 
@@ -70,4 +71,19 @@ function* tryAutoLoginSaga() {
 function* checkAuthTimeoutSaga(action) {
   yield delay(action.payload * 1000);
   yield put(authActions.logout());
+}
+
+function* requestObbCodeSaga(action) {
+  const url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=AIzaSyDdoYHA81uEQhxNcFQZAWe-LN0M3Ry7XnY';
+
+  try {
+    yield axios.post(url, {
+      requestType: 'PASSWORD_RESET',
+      email: action.payload,
+    });
+
+    yield put(authActions.requestObbCodeSuccess());
+  } catch(error) {
+    yield put(authActions.requestObbCodeFail(error));
+  }
 }
