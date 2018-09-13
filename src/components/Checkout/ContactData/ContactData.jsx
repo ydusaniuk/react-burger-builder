@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Form from '../../../components/UI/Form/Form';
-import Panel from '../../../components/UI/Panel/Panel';
-import { Spinner } from '../../../components/UI/Spinner/Spinner';
+import Form from '../../UI/Form/Form';
+import Panel from '../../UI/Panel/Panel';
+import { Spinner } from '../../UI/Spinner/Spinner';
 
 import orderActions from '../../../store/actions/order.actions';
 
@@ -11,7 +11,7 @@ import { axiosOrders } from '../../../axios-orders';
 import { withErrorHandler } from '../../../hoc/withErrorHandler/withErrorHandler';
 
 import styles from './ContactData.css';
-import panelStyles from '../../../components/UI/Panel/Panel.css';
+import panelStyles from '../../UI/Panel/Panel.css';
 
 class ContactData extends React.Component {
   controls = {

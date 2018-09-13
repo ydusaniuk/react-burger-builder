@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Layout from './containers/Layout/Layout';
-import Logout from './containers/Auth/Logout/Logout';
+import Logout from './components/Auth/Logout/Logout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 
 import authActions from './store/actions/auth.actions';
