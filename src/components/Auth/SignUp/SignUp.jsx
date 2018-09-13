@@ -2,11 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Form from '../../UI/Form/Form';
+import Panel from '../../UI/Panel/Panel';
 import Spinner from '../../UI/Spinner/Spinner';
 
 import authActions from '../../../store/actions/auth.actions';
 
 import styles from './SignUp.css';
+import panelStyles from '../../UI/Panel/Panel.css';
 
 class SignUp extends React.Component {
   controls = {
@@ -71,16 +73,18 @@ class SignUp extends React.Component {
   render() {
     return (
       <div className={styles.SignUp}>
-        <label className={styles.Title}>Create new account</label>
-        {
-          this.props.loading
-            ? <Spinner/> : (
-              <React.Fragment>
-                <Form controls={this.controls} onSubmit={this.onSubmitHandler}/>
-                {this.props.error && <p>{this.props.error.message}</p>}
-              </React.Fragment>
-            )
-        }
+        <Panel>
+          <label className={panelStyles.PanelTitle}>Create new account</label>
+          {
+            this.props.loading
+              ? <Spinner/> : (
+                <React.Fragment>
+                  <Form controls={this.controls} onSubmit={this.onSubmitHandler}/>
+                  {this.props.error && <p>{this.props.error.message}</p>}
+                </React.Fragment>
+              )
+          }
+        </Panel>
       </div>
     )
   }

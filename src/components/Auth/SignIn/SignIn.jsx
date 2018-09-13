@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Form from '../../UI/Form/Form';
+import Panel from '../../UI/Panel/Panel';
 import Spinner from '../../UI/Spinner/Spinner';
 
 import authActions from '../../../store/actions/auth.actions';
 
 import styles from './SignIn.css';
+import panelStyles from '../../UI/Panel/Panel.css';
 
 class SignIn extends React.Component {
   controls = {
@@ -48,20 +50,22 @@ class SignIn extends React.Component {
   render() {
     return (
       <div className={styles.SignIn}>
-        <label className={styles.Title}>Sign In</label>
-        {
-          this.props.loading
-            ? <Spinner/> : (
-              <React.Fragment>
-                <Form controls={this.controls} onSubmit={this.onSubmitHandler}/>
-                {this.props.error && <p>{this.props.error.message}</p>}
-                <label className={styles.Hint}>
-                  Doesn't have an account?
-                  <Link className={styles.Link} to="/auth/signUp">Create it</Link>
-                </label>
-              </React.Fragment>
-            )
-        }
+        <Panel>
+          <label className={panelStyles.PanelTitle}>Sign In</label>
+          {
+            this.props.loading
+              ? <Spinner/> : (
+                <React.Fragment>
+                  <Form controls={this.controls} onSubmit={this.onSubmitHandler}/>
+                  {this.props.error && <p>{this.props.error.message}</p>}
+                  <label className={styles.Hint}>
+                    Doesn't have an account?
+                    <Link className={styles.Link} to="/auth/signUp">Create it</Link>
+                  </label>
+                </React.Fragment>
+              )
+          }
+        </Panel>
       </div>
     )
   }

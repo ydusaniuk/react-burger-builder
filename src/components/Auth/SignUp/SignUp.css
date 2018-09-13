@@ -1,20 +1,6 @@
 .SignUp {
     width: 400px;
-    padding: 20px;
-    margin: 20px auto;
-
-    text-align: center;
-
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    box-shadow: 0 1px 1px #ccc;
-}
-
-.SignUp .Title {
-    display: block;
-    text-align: left;
-    font-size: 20px;
+    margin: 0 auto;
 }
 
 @media (min-width: 600px) {

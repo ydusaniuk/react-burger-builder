@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Spinner } from '../../../components/UI/Spinner/Spinner';
 import Form from '../../../components/UI/Form/Form';
+import Panel from '../../../components/UI/Panel/Panel';
+import { Spinner } from '../../../components/UI/Spinner/Spinner';
 
 import orderActions from '../../../store/actions/order.actions';
 
@@ -10,13 +11,14 @@ import { axiosOrders } from '../../../axios-orders';
 import { withErrorHandler } from '../../../hoc/withErrorHandler/withErrorHandler';
 
 import styles from './ContactData.css';
+import panelStyles from '../../../components/UI/Panel/Panel.css';
 
 class ContactData extends React.Component {
   controls = {
     name: {
       type: 'input',
       elementType: 'text',
-      placeholder: 'Your name',
+      label: 'Your name',
       value: '',
 
       validation: {
@@ -28,7 +30,7 @@ class ContactData extends React.Component {
     street: {
       type: 'input',
       elementType: 'text',
-      placeholder: 'Street',
+      label: 'Street',
       value: '',
 
       validation: {
@@ -40,7 +42,8 @@ class ContactData extends React.Component {
     zipCode: {
       type: 'input',
       elementType: 'text',
-      placeholder: 'ZIP Code',
+      label: 'ZIP Code',
+      hint: 'Code should have length of 5 characters',
       value: '',
 
       validation: {
@@ -53,7 +56,7 @@ class ContactData extends React.Component {
     country: {
       type: 'input',
       elementType: 'text',
-      placeholder: 'Country',
+      label: 'Country',
       value: '',
 
       validation: {
@@ -65,7 +68,7 @@ class ContactData extends React.Component {
     email: {
       type: 'input',
       elementType: 'email',
-      placeholder: 'E-Mail',
+      label: 'E-Mail',
       value: '',
 
       validation: {
@@ -76,6 +79,8 @@ class ContactData extends React.Component {
     },
     deliveryMethod: {
       type: 'select',
+      label: 'Delivery method',
+      hint: 'It could affect the cost of delivery',
       options: [
         { value: 'fastest', displayValue: 'Fastest' },
         { value: 'cheapest', displayValue: 'Cheapest' },
@@ -100,13 +105,13 @@ class ContactData extends React.Component {
   render() {
     return (
       <div className={styles.ContactData}>
-        {
-          this.props.loading ? <Spinner/>
-            : <React.Fragment>
-              <h4>Enter your Contact Data</h4>
-              <Form controls={this.controls} onSubmit={this.submitOrderHandler} submitLabel="Order"/>
-            </React.Fragment>
-        }
+        <Panel>
+          <label className={panelStyles.PanelTitle}>Enter your Contact Data</label>
+          {
+            this.props.loading ? <Spinner/>
+              : <Form controls={this.controls} onSubmit={this.submitOrderHandler} submitLabel="Order"/>
+          }
+        </Panel>
       </div>
     );
   }
