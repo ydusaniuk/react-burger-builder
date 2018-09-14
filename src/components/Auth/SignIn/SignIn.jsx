@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import Form from '../../UI/Form/Form';
 import Panel from '../../UI/Panel/Panel';
-import Spinner from '../../UI/Spinner/Spinner';
 
 import authActions from '../../../store/actions/auth.actions';
 
@@ -53,24 +52,18 @@ class SignIn extends React.Component {
     this.props.onAuth(data.email, data.password, false);
   };
 
+
   render() {
     return (
       <div className={styles.SignIn}>
         <Panel>
           <label className={panelStyles.PanelTitle}>Sign In</label>
-          {
-            this.props.loading
-              ? <Spinner/> : (
-                <React.Fragment>
-                  <Form controls={this.controls} onSubmit={this.onSubmitHandler}/>
-                  {this.props.error && <p>{this.props.error.message}</p>}
-                  <label className={styles.Hint}>
-                    Doesn't have an account?
-                    <Link className={styles.Link} to="/auth/signUp">Create it</Link>
-                  </label>
-                </React.Fragment>
-              )
-          }
+          <Form controls={this.controls} onSubmit={this.onSubmitHandler}/>
+          {this.props.error && <p>{this.props.error.message}</p>}
+          <label className={styles.Hint}>
+            Doesn't have an account?
+            <Link className={styles.Link} to="/auth/signUp">Create it</Link>
+          </label>
         </Panel>
       </div>
     )
@@ -79,7 +72,6 @@ class SignIn extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    loading: state.auth.loading,
     error: state.auth.error,
   }
 };
@@ -88,7 +80,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onAuth: (email, password, isSigningUp) => dispatch(authActions.authenticate(email, password, isSigningUp)),
     onForgotPassword: () => dispatch(authActions.forgotPassword()),
-  }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

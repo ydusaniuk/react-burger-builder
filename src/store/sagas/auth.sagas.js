@@ -4,6 +4,7 @@ import { put } from 'redux-saga/effects';
 import axios from 'axios';
 
 import authActions, { authActionTypes } from '../actions/auth.actions';
+import appActions from '../actions/app.actoins';
 
 export function* authSagas() {
   yield all([
@@ -16,6 +17,8 @@ export function* authSagas() {
 }
 
 function* authenticateSaga(action) {
+  yield put(appActions.showShadowSpinner());
+
   const url = action.payload.isSigningUp
     ? 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDdoYHA81uEQhxNcFQZAWe-LN0M3Ry7XnY'
     : 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyDdoYHA81uEQhxNcFQZAWe-LN0M3Ry7XnY';
@@ -37,6 +40,8 @@ function* authenticateSaga(action) {
     yield put(authActions.checkAuthTimeout(response.data.expiresIn));
   } catch (error) {
     yield put(authActions.authenticateFail(error.response.data.error));
+  } finally {
+    yield put(appActions.hideShadowSpinner());
   }
 }
 
@@ -74,6 +79,8 @@ function* checkAuthTimeoutSaga(action) {
 }
 
 function* requestObbCodeSaga(action) {
+  yield put(appActions.showShadowSpinner());
+
   const url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=AIzaSyDdoYHA81uEQhxNcFQZAWe-LN0M3Ry7XnY';
 
   try {
@@ -85,5 +92,7 @@ function* requestObbCodeSaga(action) {
     yield put(authActions.requestObbCodeSuccess());
   } catch(error) {
     yield put(authActions.requestObbCodeFail(error));
+  } finally {
+    yield put(appActions.hideShadowSpinner());
   }
 }

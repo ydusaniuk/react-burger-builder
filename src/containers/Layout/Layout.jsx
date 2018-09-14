@@ -2,9 +2,12 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import styles from './Layout.css';
 import { Toolbar } from '../../components/Navigation/Toolbar/Toolbar';
 import { SideDrawer } from '../../components/Navigation/SideDrawer/SideDrawer';
+
+import Spinner from '../../components/UI/Spinner/Spinner';
+
+import styles from './Layout.css';
 
 class Layout extends React.Component {
   state = {
@@ -24,6 +27,7 @@ class Layout extends React.Component {
   render() {
     return (
       <React.Fragment>
+        {this.props.showShadowSpinner && <Spinner/>}
         <Toolbar isAuthenticated={this.props.isAuthenticated} menuClicked={this.toggleSideDrawerHandler}/>
         <SideDrawer isAuthenticated={this.props.isAuthenticated} open={this.state.showSideDrawer} closed={this.closeSideDrawerHandler}/>
         <main className={styles.Content}>
@@ -37,6 +41,7 @@ class Layout extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
+    showShadowSpinner: state.app.showShadowSpinner,
   }
 };
 

@@ -3,15 +3,14 @@ import { connect } from 'react-redux';
 
 import { Modal } from '../../components/UI/Modal/Modal';
 import { Burger } from '../../components/Burger/Burger';
-import { Spinner } from '../../components/UI/Spinner/Spinner';
 import { OrderSummary } from '../../components/Burger/OrderSummary/OrderSummary';
 import { BuildControls } from '../../components/Burger/BuildControls/BuildControls';
 
 import { axiosOrders } from '../../axios-orders';
 import { withErrorHandler } from '../../hoc/withErrorHandler/withErrorHandler';
 
-import burgerBuilderActions from '../../store/actions/burgerBuilder.actions';
 import orderActions from '../../store/actions/order.actions';
+import burgerBuilderActions from '../../store/actions/burgerBuilder.actions';
 
 export class BurgerBuilder extends React.Component {
   state = {
@@ -59,18 +58,17 @@ export class BurgerBuilder extends React.Component {
           }
         </Modal>
         {
-          this.props.ingredients === null
-            ? <Spinner/>
-            : <React.Fragment>
-              <Burger ingredients={this.props.ingredients}/>
-              <BuildControls price={this.props.totalPrice}
-                             disabledInfo={disabledInfo}
-                             orderClicked={() => this.purchaseUpdatedHandler(true)}
-                             ingredientAdded={this.props.onIngredientAdded}
-                             ingredientRemoved={this.props.onIngredientRemoved}
-                             purchasable={this.isPurchasable()}
-                             isAuthenticated={this.props.isAuthenticated}/>
-            </React.Fragment>
+          this.props.ingredients &&
+          <React.Fragment>
+            <Burger ingredients={this.props.ingredients}/>
+            <BuildControls price={this.props.totalPrice}
+                           disabledInfo={disabledInfo}
+                           orderClicked={() => this.purchaseUpdatedHandler(true)}
+                           ingredientAdded={this.props.onIngredientAdded}
+                           ingredientRemoved={this.props.onIngredientRemoved}
+                           purchasable={this.isPurchasable()}
+                           isAuthenticated={this.props.isAuthenticated}/>
+          </React.Fragment>
         }
         {
           this.props.error && (<h1>Can't load ingredients</h1>)

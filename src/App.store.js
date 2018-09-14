@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
+import appReducer from './store/reducers/app.reducer';
 import authReducer from './store/reducers/auth.reducer';
 import orderReducer from './store/reducers/order.reducer';
 import burgerBuilderReducer from './store/reducers/burgerBuilder.reducer';
@@ -14,9 +15,10 @@ const composeEnhancers = process.env.NODE_ENV === 'development'
   : null || compose;
 
 const rootReducer = combineReducers({
-  burgerBuilder: burgerBuilderReducer,
-  order: orderReducer,
+  app: appReducer,
   auth: authReducer,
+  order: orderReducer,
+  burgerBuilder: burgerBuilderReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

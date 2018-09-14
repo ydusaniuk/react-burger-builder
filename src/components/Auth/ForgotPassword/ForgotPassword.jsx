@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import Form from '../../UI/Form/Form';
 import Panel from '../../UI/Panel/Panel';
-import Spinner from '../../UI/Spinner/Spinner';
 
 import authActions from '../../../store/actions/auth.actions';
 
@@ -46,14 +45,12 @@ class ForgotPassword extends React.Component {
                 </div>
               )
               : (
-                this.props.requestOobCodeLoadStatus.loading
-                  ? <Spinner/> : (
-                    <React.Fragment>
-                      <Form controls={this.controls} onSubmit={this.onSubmitHandler}/>
-                      {this.props.requestOobCodeLoadStatus.error &&
-                      <p>{this.props.requestOobCodeLoadStatus.error.message}</p>}
-                    </React.Fragment>
-                  ))
+                <React.Fragment>
+                  <Form controls={this.controls} onSubmit={this.onSubmitHandler}/>
+                  {this.props.requestOobCodeLoadStatus.error &&
+                  <p>{this.props.requestOobCodeLoadStatus.error.message}</p>}
+                </React.Fragment>
+              )
           }
         </Panel>
       </div>

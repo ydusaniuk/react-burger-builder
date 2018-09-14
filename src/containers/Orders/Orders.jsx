@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Order from '../../components/Order/Order';
-import { Spinner } from '../../components/UI/Spinner/Spinner';
 
 import orderActions from '../../store/actions/order.actions';
 
@@ -18,14 +17,11 @@ class Orders extends React.Component {
     return (
       <div>
         {
-          this.props.loading
-            ? <Spinner/>
-            : (
-              this.props.orders.map(order =>
-                <Order key={order.id}
-                       ingredients={order.ingredients}
-                       price={order.price}/>
-              ))
+          this.props.orders.map(order =>
+            <Order key={order.id}
+                   ingredients={order.ingredients}
+                   price={order.price}/>
+          )
         }
       </div>
     );
@@ -35,7 +31,6 @@ class Orders extends React.Component {
 const mapStateToProps = state => {
   return {
     orders: state.order.orders,
-    loading: state.order.loading,
     token: state.auth.token,
     userId: state.auth.userId,
   }

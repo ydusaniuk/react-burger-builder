@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import Form from '../../UI/Form/Form';
 import Panel from '../../UI/Panel/Panel';
-import Spinner from '../../UI/Spinner/Spinner';
 
 import authActions from '../../../store/actions/auth.actions';
 
@@ -75,15 +74,8 @@ class SignUp extends React.Component {
       <div className={styles.SignUp}>
         <Panel>
           <label className={panelStyles.PanelTitle}>Create new account</label>
-          {
-            this.props.loading
-              ? <Spinner/> : (
-                <React.Fragment>
-                  <Form controls={this.controls} onSubmit={this.onSubmitHandler}/>
-                  {this.props.error && <p>{this.props.error.message}</p>}
-                </React.Fragment>
-              )
-          }
+          <Form controls={this.controls} onSubmit={this.onSubmitHandler}/>
+          {this.props.error && <p>{this.props.error.message}</p>}
         </Panel>
       </div>
     )
@@ -92,7 +84,6 @@ class SignUp extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    loading: state.auth.loading,
     error: state.auth.error,
   }
 };

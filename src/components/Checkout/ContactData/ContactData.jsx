@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import Form from '../../UI/Form/Form';
 import Panel from '../../UI/Panel/Panel';
-import { Spinner } from '../../UI/Spinner/Spinner';
 
 import orderActions from '../../../store/actions/order.actions';
 
@@ -107,10 +106,7 @@ class ContactData extends React.Component {
       <div className={styles.ContactData}>
         <Panel>
           <label className={panelStyles.PanelTitle}>Enter your Contact Data</label>
-          {
-            this.props.loading ? <Spinner/>
-              : <Form controls={this.controls} onSubmit={this.submitOrderHandler} submitLabel="Order"/>
-          }
+          <Form controls={this.controls} onSubmit={this.submitOrderHandler} submitLabel="Order"/>
         </Panel>
       </div>
     );
@@ -121,7 +117,6 @@ const mapStateToProps = state => {
   return {
     ingredients: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
-    loading: state.order.loading,
     token: state.auth.token,
     userId: state.auth.userId,
   }
