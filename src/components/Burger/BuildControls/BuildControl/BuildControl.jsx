@@ -1,27 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import styles from './BuildControl.css';
 
-export class BuildControl extends React.Component {
-  render() {
-    const {label, lessDisabled, lessClicked, moreClicked} = this.props;
+const BuildControl = props => (
+  <div className={styles.BuildControl}>
+    <div className={styles.Label}>{props.label}</div>
 
-    return (
-      <div className={styles.BuildControl}>
-        <div className={styles.Label}>{label}</div>
-        <button className={styles.Less}
-                onClick={lessClicked}
-                disabled={lessDisabled}>
-          Less
-        </button>
-        <button className={styles.More}
-                onClick={moreClicked}>
-          More
-        </button>
-      </div>
-    );
-  }
-}
+    <button className={styles.Less}
+            onClick={props.lessClicked}
+            disabled={props.lessDisabled}>Less</button>
+
+    <button className={styles.More}
+            onClick={props.moreClicked}>More</button>
+  </div>
+);
 
 BuildControl.propTypes = {
   label: PropTypes.string.isRequired,
@@ -33,3 +26,5 @@ BuildControl.propTypes = {
 BuildControl.defaultProps = {
   lessDisabled: false,
 };
+
+export default BuildControl;

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import BuildControl from './BuildControl/BuildControl';
+
 import styles from './BuildControls.css';
-import { BuildControl } from './BuildControl/BuildControl';
 
 const CONTROLS = [
   { label: 'Salad', type: 'salad' },
@@ -10,36 +12,26 @@ const CONTROLS = [
   { label: 'Meat', type: 'meat' },
 ];
 
-export class BuildControls extends React.Component {
-  render() {
-    return (
-      <div className={styles.BuildControls}>
-        <p>Price: <strong>{this.props.price.toFixed(2)}</strong></p>
-        {
-          CONTROLS.map(ctrl =>
-            <BuildControl key={ctrl.label}
-                          label={ctrl.label}
-                          lessDisabled={this.props.disabledInfo[ctrl.type]}
-                          moreClicked={() => this.props.ingredientAdded(ctrl.type)}
-                          lessClicked={() => this.props.ingredientRemoved(ctrl.type)}/>
-          )
-        }
-        {
-          !this.props.isAuthenticated
-            ? <label>SIGN UP TO ORDER</label>
-            : (
-              <button disabled={!this.props.purchasable}
-                      onClick={this.props.orderClicked}
-                      className={styles.OrderButton}>
-                ORDER NOW
-              </button>
-            )
-        }
-
-      </div>
-    );
-  }
-}
+const BuildControls = props => (
+  <div className={styles.BuildControls}>
+    <p>Price: <strong>{props.price.toFixed(2)}</strong></p>
+    {
+      CONTROLS.map(ctrl =>
+        <BuildControl key={ctrl.label}
+                      label={ctrl.label}
+                      lessDisabled={props.disabledInfo[ctrl.type]}
+                      moreClicked={() => props.ingredientAdded(ctrl.type)}
+                      lessClicked={() => props.ingredientRemoved(ctrl.type)}/>)
+    }
+    {
+      props.isAuthenticated
+        ? <button disabled={!props.purchasable}
+                  onClick={props.orderClicked}
+                  className={styles.OrderButton}>ORDER NOW</button>
+        : <label>SIGN UP TO ORDER</label>
+    }
+  </div>
+);
 
 BuildControl.propTypes = {
   purchasable: PropTypes.bool,
@@ -50,3 +42,5 @@ BuildControl.propTypes = {
   ingredientAdded: PropTypes.func,
   ingredientRemoved: PropTypes.func,
 };
+
+export default BuildControls;

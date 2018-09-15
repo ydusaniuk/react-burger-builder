@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Modal } from '../../components/UI/Modal/Modal';
-import { Burger } from '../../components/Burger/Burger';
-import { OrderSummary } from '../../components/Burger/OrderSummary/OrderSummary';
-import { BuildControls } from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import Burger from '../../components/Burger/Burger';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 
 import { axiosOrders } from '../../axios-orders';
 import { withErrorHandler } from '../../hoc/withErrorHandler/withErrorHandler';
@@ -18,7 +18,8 @@ export class BurgerBuilder extends React.Component {
   };
 
   isPurchasable = () => {
-    const sum = Object.keys(this.props.ingredients)
+    const sum = Object
+      .keys(this.props.ingredients || {})
       .map(key => this.props.ingredients[key])
       .reduce((sum, el) => sum + el, 0);
 
@@ -49,30 +50,20 @@ export class BurgerBuilder extends React.Component {
     return (
       <React.Fragment>
         <Modal visible={this.state.purchasing} onClosed={() => this.purchaseUpdatedHandler(false)}>
-          {
-            this.props.ingredients &&
-            <OrderSummary ingredients={this.props.ingredients}
-                          totalPrice={this.props.totalPrice}
-                          cancelClicked={() => this.purchaseUpdatedHandler(false)}
-                          continueClicked={this.purchaseContinueHandler}/>
-          }
+          <OrderSummary ingredients={this.props.ingredients}
+                        totalPrice={this.props.totalPrice}
+                        cancelClicked={() => this.purchaseUpdatedHandler(false)}
+                        continueClicked={this.purchaseContinueHandler}/>
         </Modal>
-        {
-          this.props.ingredients &&
-          <React.Fragment>
-            <Burger ingredients={this.props.ingredients}/>
-            <BuildControls price={this.props.totalPrice}
-                           disabledInfo={disabledInfo}
-                           orderClicked={() => this.purchaseUpdatedHandler(true)}
-                           ingredientAdded={this.props.onIngredientAdded}
-                           ingredientRemoved={this.props.onIngredientRemoved}
-                           purchasable={this.isPurchasable()}
-                           isAuthenticated={this.props.isAuthenticated}/>
-          </React.Fragment>
-        }
-        {
-          this.props.error && (<h1>Can't load ingredients</h1>)
-        }
+        <Burger ingredients={this.props.ingredients}/>
+        <BuildControls price={this.props.totalPrice}
+                       disabledInfo={disabledInfo}
+                       orderClicked={() => this.purchaseUpdatedHandler(true)}
+                       ingredientAdded={this.props.onIngredientAdded}
+                       ingredientRemoved={this.props.onIngredientRemoved}
+                       purchasable={this.isPurchasable()}
+                       isAuthenticated={this.props.isAuthenticated}/>
+        {this.props.error && (<h1>Can't load ingredients</h1>)}
       </React.Fragment>
     )
   }

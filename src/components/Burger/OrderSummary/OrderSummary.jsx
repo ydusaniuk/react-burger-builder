@@ -1,16 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Button from '../../UI/Button/Button';
 
-export const OrderSummary = props => (
+const OrderSummary = props => (
   <React.Fragment>
     <h3>Your Order</h3>
     <p>A delicious burger with the following ingredients:</p>
     <ul>
       {
-        Object.keys(props.ingredients)
+        Object.keys(props.ingredients || {})
           .map(key =>
             <li key={key}>
-              <span style={{textTransform: 'capitalize'}}>{key}</span>: {props.ingredients[key]}
+              <span style={{ textTransform: 'capitalize' }}>{key}</span>: {props.ingredients[key]}
             </li>)
       }
     </ul>
@@ -20,3 +22,12 @@ export const OrderSummary = props => (
     <Button type="Success" clicked={props.continueClicked}>Continue</Button>
   </React.Fragment>
 );
+
+OrderSummary.propTypes = {
+  ingredients: PropTypes.object,
+  totalPrice: PropTypes.number,
+  cancelClicked: PropTypes.func.isRequired,
+  continueClicked: PropTypes.func.isRequired,
+};
+
+export default OrderSummary;

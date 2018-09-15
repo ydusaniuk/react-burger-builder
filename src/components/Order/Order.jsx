@@ -13,12 +13,14 @@ const Order = props => {
 
   return (
     <div className={styles.Order}>
-      <p>Ingredients: {
-        ingredients.map(ig => <span className={styles.Ingredient}
-                                    key={ig.name}>
-          {ig.name} ({ig.amount})
-        </span>)
-      }</p>
+      <p>Ingredients:
+        {
+          ingredients.map(ig =>
+            <span className={styles.Ingredient} key={ig.name}>
+            {ig.name} ({ig.amount})
+          </span>)
+        }
+      </p>
       <p>Price: <strong>USD {Number(props.price).toFixed(2)}</strong></p>
     </div>
   );

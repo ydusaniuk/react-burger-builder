@@ -6,7 +6,7 @@ import styles from './Modal.css';
 import { Backdrop } from '../Backdrop/Backdrop';
 
 export class Modal extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     return (
       nextProps.visible !== this.props.visible ||
       nextProps.children !== this.props.children
@@ -33,3 +33,5 @@ Modal.propTypes = {
   visible: PropTypes.bool.isRequired,
   onClosed: PropTypes.func,
 };
+
+export default Modal;
