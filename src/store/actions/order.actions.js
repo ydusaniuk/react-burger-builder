@@ -43,13 +43,9 @@ const purchaseBurgerFail = error => {
   }
 };
 
-const fetchOrders = (token, userId) => {
+const fetchOrders = () => {
   return {
     type: orderActionTypes.FETCH_ORDERS,
-    payload: {
-      token,
-      userId,
-    },
   }
 };
 

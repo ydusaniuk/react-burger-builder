@@ -20,7 +20,9 @@ function* purchaseBurgerSaga(action) {
   try {
     yield put(appActions.showShadowSpinner());
 
-    const res = yield axiosOrders.post('/orders.json?auth=' + action.payload.token, action.payload.orderData);
+    const token = yield localStorage.getItem('token');
+
+    const res = yield axiosOrders.post('/orders.json?auth=' + token, action.payload.orderData);
     yield put(orderActions.purchaseBurgerSuccess(res.data.name, action.payload.orderData));
   } catch (error) {
     yield put(orderActions.purchaseBurgerFail(error))
@@ -29,11 +31,14 @@ function* purchaseBurgerSaga(action) {
   }
 }
 
-function* fetchOrdersSaga(action) {
+function* fetchOrdersSaga() {
   try {
     yield put(appActions.showShadowSpinner());
 
-    const queryParams = `auth=${action.payload.token}&orderBy="userId"&equalTo="${action.payload.userId}"`;
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('localId');
+
+    const queryParams = `auth=${token}&orderBy="userId"&equalTo="${userId}"`;
     const res = yield axiosOrders.get('/orders.json?' + queryParams);
 
     const fetchedOrders = [];

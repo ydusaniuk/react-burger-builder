@@ -93,12 +93,12 @@ class ContactData extends React.Component {
 
     const orderData = {
       ingredients: this.props.ingredients,
-      userId: this.props.userId,
+      userId: localStorage.getItem('localId'),
       price: this.props.price,
       orderData: data,
     };
 
-    this.props.onOrderBurger(orderData, this.props.token);
+    this.props.onOrderBurger(orderData);
   };
 
   render() {
@@ -117,14 +117,12 @@ const mapStateToProps = state => {
   return {
     ingredients: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
-    token: state.auth.token,
-    userId: state.auth.userId,
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onOrderBurger: (data, token) => dispatch(orderActions.purchaseBurger(data, token)),
+    onOrderBurger: (data) => dispatch(orderActions.purchaseBurger(data)),
   }
 };
 

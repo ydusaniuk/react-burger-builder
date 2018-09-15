@@ -2,7 +2,6 @@ import { authActionTypes } from '../actions/auth.actions';
 import requestStatus from '../../shared/requestStatus';
 
 export const initialState = {
-  token: null,
   userId: null,
   error: null,
   loading: false,
@@ -22,7 +21,6 @@ const authReducer = (state = initialState, action) => {
     case authActionTypes.AUTHENTICATE_SUCCESS:
       return {
         ...state,
-        token: action.payload.token,
         userId: action.payload.userId,
         loading: false,
       };
@@ -37,7 +35,6 @@ const authReducer = (state = initialState, action) => {
     case authActionTypes.LOGOUT_SUCCESS:
       return {
         ...state,
-        token: null,
         userId: null,
       };
 

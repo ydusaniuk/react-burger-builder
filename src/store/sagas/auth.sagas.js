@@ -36,7 +36,7 @@ function* authenticateSaga(action) {
     localStorage.setItem('token', response.data.idToken);
     localStorage.setItem('localId', response.data.localId);
 
-    yield put(authActions.authenticateSuccess(response.data.idToken, response.data.localId));
+    yield put(authActions.authenticateSuccess(response.data.localId));
     yield put(authActions.checkAuthTimeout(response.data.expiresIn));
   } catch (error) {
     yield put(authActions.authenticateFail(error.response.data.error));

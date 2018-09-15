@@ -30,7 +30,6 @@ const authenticateSuccess = (token, userId) => {
   return {
     type: authActionTypes.AUTHENTICATE_SUCCESS,
     payload: {
-      token: token,
       userId: userId,
     },
   }
