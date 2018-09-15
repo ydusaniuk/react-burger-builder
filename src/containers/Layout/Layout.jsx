@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Toolbar } from '../../components/Navigation/Toolbar/Toolbar';
 import { SideDrawer } from '../../components/Navigation/SideDrawer/SideDrawer';
 
-import Spinner from '../../components/UI/Spinner/Spinner';
+import ShadowSpinner from '../../components/UI/ShadowSpinner/ShadowSpinner';
 
 import styles from './Layout.css';
 
@@ -15,7 +15,7 @@ class Layout extends React.Component {
   };
 
   closeSideDrawerHandler = () =>
-    this.setState({showSideDrawer: false});
+    this.setState({ showSideDrawer: false });
 
   toggleSideDrawerHandler = () =>
     this.setState((prevState) => {
@@ -27,9 +27,11 @@ class Layout extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {this.props.showShadowSpinner && <Spinner/>}
+        <ShadowSpinner/>
         <Toolbar isAuthenticated={this.props.isAuthenticated} menuClicked={this.toggleSideDrawerHandler}/>
-        <SideDrawer isAuthenticated={this.props.isAuthenticated} open={this.state.showSideDrawer} closed={this.closeSideDrawerHandler}/>
+        <SideDrawer isAuthenticated={this.props.isAuthenticated}
+                    open={this.state.showSideDrawer}
+                    closed={this.closeSideDrawerHandler}/>
         <main className={styles.Content}>
           {this.props.children}
         </main>
@@ -41,7 +43,6 @@ class Layout extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.userId !== null,
-    showShadowSpinner: state.app.showShadowSpinner,
   }
 };
 
